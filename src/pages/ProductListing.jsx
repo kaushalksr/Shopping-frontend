@@ -10,7 +10,7 @@ const ProductListing = () => {
   const [sortType, setSortType] = useState("");
 
   const { data, loading, error } = useFetch(
-    `http://localhost:3000/api/products`,
+    `https://shopping-jet-two.vercel.app/api/products`,
   );
 
   const { addToCart } = useContext(CartContext);
