@@ -29,6 +29,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
 
 h1 {
   font-size: 3.2em;

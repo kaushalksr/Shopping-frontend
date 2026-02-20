@@ -8,7 +8,8 @@ import HomePage from "./pages/HomePage.jsx";
 import ProductListing from "./pages/ProductListing.jsx";
 import CartProvider from "./context/cartContext.jsx";
 import CartPage from "./pages/CartPage.jsx";
-import Wishlist from "./pages/WishList.jsx";
+import WishlistPage from "./pages/WishlistPage.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/wishlist",
-    element: <Wishlist />,
+    element: <WishlistPage />,
+  },
+  {
+    path: "/product/:productId",
+    element: <ProductDetail />,
   },
 ]);
 

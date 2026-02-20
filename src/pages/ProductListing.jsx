@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import Header from "../components/Header";
 import useFetch from "../useFetch";
 import { CartContext } from "../context/cartContext";
+import { Link } from "react-router-dom";
 
 const ProductListing = () => {
   const [maxPrice, setMaxPrice] = useState(5000);
@@ -13,7 +14,7 @@ const ProductListing = () => {
     `https://shopping-jet-two.vercel.app/api/products`,
   );
 
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, addToWishlist } = useContext(CartContext);
 
   const priceRangeInput = document.getElementById("priceRange");
   const priceRangeOutput = document.getElementById("priceRange2");
@@ -170,12 +171,14 @@ const ProductListing = () => {
               {filteredProducts?.map((product) => (
                 <div key={product._id} className="col-lg-4">
                   <div className="card m-2 w-100">
-                    <img
-                      height={300}
-                      src={product.productImage}
-                      className="card-img-top"
-                      alt={product.productName}
-                    />
+                    <Link to={`/product/${product._id}`}>
+                      <img
+                        height={300}
+                        src={product.productImage}
+                        className="card-img-top"
+                        alt={product.productName}
+                      />
+                    </Link>
                     <div className="card-body p-0">
                       <div
                         className="p-2"
@@ -185,19 +188,28 @@ const ProductListing = () => {
                         }}>
                         <p className="card-title">
                           {"  "}
-                          {product.productName}
+                          {product.productCategory} {product.productName}
                         </p>
                         <p className="card-text">
                           {" "}
                           <b>₹{product.productPrice}</b>{" "}
                         </p>
+                        <p className="card-text">
+                          <b>Rating:</b> {product.productRating}
+                        </p>
                       </div>
-
+                      <button
+                        onClick={() => addToWishlist(product)}
+                        style={{ borderRadius: 0 }}
+                        className="btn btn-secondary w-100">
+                        Add to WishList
+                      </button>{" "}
+                      <br /> <br />
                       <button
                         onClick={() => addToCart(product)}
                         style={{ borderRadius: 0 }}
                         className="btn btn-primary w-100">
-                        Add to cart
+                        Add to Cart
                       </button>
                     </div>
                   </div>

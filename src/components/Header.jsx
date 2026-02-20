@@ -5,9 +5,9 @@ import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
 
 const Header = () => {
-  const { cart } = useContext(CartContext);
+  const { cart ,wishlist} = useContext(CartContext);
   return (
-    <div>
+    <div className="sticky-top" >
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
@@ -41,6 +41,7 @@ const Header = () => {
                 alt="Wishlist"
               />
             </Link>
+            <p className="m-0" >({wishlist.length})</p> 
           </div>
         </div>
       </nav>
