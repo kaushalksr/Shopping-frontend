@@ -10,6 +10,9 @@ import CartProvider from "./context/cartContext.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import WishlistPage from "./pages/WishlistPage.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
+import OrderHistory from "./pages/OrderHistory.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,18 @@ const router = createBrowserRouter([
     path: "/product/:productId",
     element: <ProductDetail />,
   },
+  {
+    path:"/checkoutpage",
+    element:<CheckoutPage/>
+  },
+  {
+    path:"/orderHistory",
+    element:<OrderHistory/>
+  },
+  {
+    path:"/userProfile",
+    element:<UserProfile/>
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(

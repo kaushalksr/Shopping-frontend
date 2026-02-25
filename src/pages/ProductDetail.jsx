@@ -14,8 +14,6 @@ const ProductDetail = () => {
 
   const { productId } = useParams();
 
-
-
   const selectedProduct = data?.find((item) => item._id === productId);
   if (!selectedProduct) return <p>Loading...</p>;
 
@@ -39,7 +37,7 @@ const ProductDetail = () => {
                 className="card-img-top m-0"
                 alt={selectedProduct?.productName}
               />
-              
+
               <br />
               <button
                 onClick={() => addToCart(selectedProduct)}

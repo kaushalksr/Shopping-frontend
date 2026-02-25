@@ -73,12 +73,14 @@ const HomePage = () => {
           </Link>
         </div>
 
-        <div className="my-3" style={{ justifyContent: "center" }}>
-          <img
-            style={{width: 900 }}
-            src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt=""
-          />
+        <div className="my-3 row" style={{ justifyContent: "center" }}>
+          <div className="col-lg-12 col-sm-12">
+            <img
+              style={{ width: "100%" }}
+              src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt=""
+            />
+          </div>
         </div>
 
         <div className="row">

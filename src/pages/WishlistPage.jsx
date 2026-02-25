@@ -4,9 +4,6 @@ import { CartContext } from "../context/cartContext";
 import useFetch from "../useFetch";
 
 const WishlistPage = () => {
-  const { data, loading, error } = useFetch(
-    "https://shopping-jet-two.vercel.app/api/products",
-  );
   const { wishlist, addToCart, setWishlist } = useContext(CartContext);
   const handleMoveTocart = (item) => {
     addToCart(item);
