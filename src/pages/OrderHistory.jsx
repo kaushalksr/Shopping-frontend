@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
-import deleteImg from "../logo/deleteImg.png";
-import { set } from "mongoose";
+
+
 
 const OrderHistory = () => {
   const { orderData ,setOrderData} = useContext(CartContext);
