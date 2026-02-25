@@ -30,18 +30,18 @@ const CartProvider = ({ children }) => {
   
 
   
-  const totalPrice = cart.reduce((acc, curr) => {
+  const totalPrice = cart?.reduce((acc, curr) => {
     acc += curr.productPrice * curr.productQuantity;
     return acc;
   }, 0);
 
-  const totalDiscount = cart.reduce((acc, curr) => {
+  const totalDiscount = cart?.reduce((acc, curr) => {
     acc +=
       ((curr.productDiscount * curr.productPrice) / 100) * curr.productQuantity;
     return acc;
   }, 0);
 
-  const totalDeliveryCharge = cart.reduce((acc, curr) => {
+  const totalDeliveryCharge = cart?.reduce((acc, curr) => {
     acc += curr.productDeliveryCharge * curr.productQuantity;
     return acc;
   }, 0);
