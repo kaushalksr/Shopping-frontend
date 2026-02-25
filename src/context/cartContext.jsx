@@ -4,16 +4,14 @@ import useFetch from "../useFetch";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-
-
   const [selectedAddress, setSelectedAddress] = useState("");
-
 
   const [cart, setCart] = useState(() => {
     const storedCartValue = localStorage.getItem("cart");
-    return !storedCartValue || storedCartValue !== "undefined"
-      ? JSON.parse(storedCartValue)
-      : [];
+    if (!storedCartValue || storedCartValue === "undefined") return [];
+
+    const parsed = JSON.parse(storedCartValue);
+    return Array.isArray(parsed) ? parsed : [];
   });
 
   const [address, setAddress] = useState(() => {
@@ -27,9 +25,6 @@ const CartProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
   const [products, setProducts] = useState([]);
 
-  
-
-  
   const totalPrice = cart?.reduce((acc, curr) => {
     acc += curr.productPrice * curr.productQuantity;
     return acc;
@@ -66,7 +61,6 @@ const CartProvider = ({ children }) => {
       increment(product._id);
     } else setCart((prevValue) => [...prevValue, product]);
   };
-
 
   const addToWishlist = (product) => {
     setWishlist((prevValue) => [...prevValue, product]);
@@ -113,7 +107,7 @@ const CartProvider = ({ children }) => {
         address,
         setAddress,
         selectedAddress,
-        setSelectedAddress
+        setSelectedAddress,
       }}>
       {children}
     </CartContext.Provider>
