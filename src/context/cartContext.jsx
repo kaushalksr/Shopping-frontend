@@ -4,7 +4,7 @@ import useFetch from "../useFetch";
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
 

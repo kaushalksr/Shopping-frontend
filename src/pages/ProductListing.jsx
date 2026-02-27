@@ -54,8 +54,6 @@ const ProductListing = () => {
 
   const navigate = useNavigate();
 
- 
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error ocurred...</p>;
 
@@ -63,14 +61,15 @@ const ProductListing = () => {
     <div>
       <Header />
       <div className="container">
-
         <div className="row">
           <div className="col-lg-3 p-2 border fixed-box">
-            <h5 className="d-flex justify-content-between" >
+            <h5 className="d-flex justify-content-between">
               {" "}
               Filters:{" "}
               <span>
-                <Link className="text-decoration-none" onClick={handleReset}>Reset</Link>
+                <Link className="text-decoration-none" onClick={handleReset}>
+                  Reset
+                </Link>
               </span>{" "}
             </h5>
             <div className="m-2">
@@ -173,71 +172,72 @@ const ProductListing = () => {
           <div className="col-lg-9 p-2 border">
             <div className="row">
               {filteredProducts?.map((product) => {
-                const isInCart = cart.some((item)=>item._id === product._id);
-               return (
-                <div key={product._id} className="col-lg-4">
-                  <div className="card m-2 w-100 text-center">
-                    <Link to={`/product/${product._id}`}>
-                      <img
-                        style={{ position: "relative" }}
-                        height={200}
-                        src={product.productImage}
-                        className="card-img-top"
-                        alt={product.productName}
-                      />
-                      <span
-                        className="btn btn-sm rounded-0 p-1 rounded-1"
-                        style={{
-                          position: "absolute",
-                          top: 5,
-                          left: 7,
-                        }}>
-                        <div className="d-inline-flex align-items-center bg-light px-2 py-1 rounded">
-                          <span className="fw-bold me-1">
-                            {product.productRating}
-                          </span>
-                          <span style={{ color: "green" }}>★</span>
+                const isInCart = cart.some((item) => item._id === product._id);
+                return (
+                  <div key={product._id} className="col-lg-4">
+                    <div className="card m-2 w-100 text-center">
+                      <Link to={`/product/${product._id}`}>
+                        <img
+                          style={{ position: "relative" }}
+                          height={200}
+                          src={product.productImage}
+                          className="card-img-top"
+                          alt={product.productName}
+                        />
+                        <span
+                          className="btn btn-sm rounded-0 p-1 rounded-1"
+                          style={{
+                            position: "absolute",
+                            top: 5,
+                            left: 7,
+                          }}>
+                          <div className="d-inline-flex align-items-center bg-light px-2 py-1 rounded">
+                            <span className="fw-bold me-1">
+                              {product.productRating}
+                            </span>
+                            <span style={{ color: "green" }}>★</span>
+                          </div>
+                          {/* IMAGE */}
+                        </span>
+                      </Link>
+                      <div className="card-body p-0">
+                        <div
+                          className="p-2"
+                          style={{
+                            justifyContent: "center",
+                            textAlign: "center",
+                          }}>
+                          <p className="card-title">
+                            {"  "}
+                            {product.productCategory} {product.productName}
+                          </p>
+                          <p className="card-text">
+                            {" "}
+                            <b>₹{product.productPrice}</b>{" "}
+                          </p>
                         </div>
-                        {/* IMAGE */}
-                      </span>
-                    </Link>
-                    <div className="card-body p-0">
-                      <div
-                        className="p-2"
-                        style={{
-                          justifyContent: "center",
-                          textAlign: "center",
-                        }}>
-                        <p className="card-title">
-                          {"  "}
-                          {product.productCategory} {product.productName}
-                        </p>
-                        <p className="card-text">
-                          {" "}
-                          <b>₹{product.productPrice}</b>{" "}
-                        </p>
+                        <Link
+                          onClick={() => addToWishlist(product)}
+                          style={{ borderRadius: 0, color: "green" }}
+                          className="w-100 text-decoration-none">
+                          ADD TO WISHLIST
+                        </Link>{" "}
+                        <br />
+                        <button
+                          onClick={() =>
+                            isInCart
+                              ? navigate("/cartlist")
+                              : addToCart(product)
+                          }
+                          style={{ borderRadius: 0 }}
+                          className="w-100 text-decoration-none border-0">
+                          {isInCart ? "GO TO CART" : "ADD TO CART"}
+                        </button>
                       </div>
-                      <Link
-                        onClick={() => addToWishlist(product)}
-                        style={{ borderRadius: 0, color: "green" }}
-                        className="w-100 text-decoration-none">
-                        ADD TO WISHLIST
-                      </Link>{" "}
-                      <br />
-                      <button
-                        onClick={() =>
-                          isInCart
-                            ? navigate("/cartlist")
-                            : addToCart(product)
-                        }
-                        style={{ borderRadius: 0 }}
-                        className="w-100 text-decoration-none border-0">
-                        {isInCart ? "GO TO CART" : "ADD TO CART"}
-                      </button>
                     </div>
                   </div>
-                </div>
-              )})}
+                );
+              })}
             </div>
           </div>
         </div>

@@ -27,7 +27,7 @@ const CheckoutPage = () => {
     setOrderData,
     orderData,
     setCart,
-    showAlert
+    showAlert,
   } = useContext(CartContext);
 
   const handleAddress = (value) => {
@@ -35,6 +35,7 @@ const CheckoutPage = () => {
   };
   // SAVE ADDRESS
   const saveAddress = () => {
+    if (address.length === 0) setSelectedAddress(null);
     const newAddress = {
       id: Date.now(),
       ...formData,
@@ -46,7 +47,6 @@ const CheckoutPage = () => {
       fullAddress: "",
     });
     setShowAddressForm(false);
-    
   };
 
   // SAVE ORDER
@@ -54,7 +54,7 @@ const CheckoutPage = () => {
   const saveOrder = (event) => {
     event.preventDefault();
 
-    if (!selectedAddress) {
+    if (!selectedAddress || selectedAddress === null || address.length < 1) {
       setMessage("Please Select Address!");
       return;
     }
@@ -68,7 +68,7 @@ const CheckoutPage = () => {
 
     setOrderData((prev) => [...prev, newOrder]);
 
-    showAlert("ORDER PLACED SUCCESSFULLY !","success");
+    showAlert("ORDER PLACED SUCCESSFULLY !", "success");
 
     setTimeout(() => {
       navigate("/orderHistory");
@@ -76,9 +76,13 @@ const CheckoutPage = () => {
     }, 3000);
   };
 
+  const [deletedAddress, setDeletedAddress] = useState(null);
+
   const deleteAddress = (id) => {
-    setAddress((prev) => prev.filter((item) => item.id !== id));
-    showAlert("Address deleted successfully!","danger")
+    setDeletedAddress(address.find((add) => add.id === id));
+
+    setAddress((prev) => prev.filter((add) => add.id !== id));
+    if (selectedAddress === deletedAddress) setSelectedAddress(null);
   };
 
   useEffect(() => {
@@ -86,7 +90,6 @@ const CheckoutPage = () => {
       localStorage.setItem("address", JSON.stringify(address));
     }
   }, [address]);
-
 
   return (
     <div>
@@ -158,10 +161,16 @@ const CheckoutPage = () => {
               Total Price: ₹
               {totalPrice + totalDeliveryCharge - totalDiscount}{" "}
             </h5>
-            <button onClick={saveOrder} className="btn btn-success w-50">
-              Checkout
-            </button>
-            <p className="m-2 fw-semibold" style={{ color: "green" }}>{successMessage}</p>
+            {address.length > 0 &&
+              selectedAddress &&
+              selectedAddress !== deletedAddress && (
+                <button onClick={saveOrder} className="btn btn-success w-50">
+                  Checkout
+                </button>
+              )}
+            <p className="m-2 fw-semibold" style={{ color: "green" }}>
+              {successMessage}
+            </p>
           </div>
         </div>
       </div>
