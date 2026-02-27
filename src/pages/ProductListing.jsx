@@ -12,7 +12,7 @@ const ProductListing = () => {
   const [sortType, setSortType] = useState("");
 
   const { data, loading, error } = useFetch(
-    `https://shopping-jet-two.vercel.app/api/products`,
+    `https://shopping-kappa-five.vercel.app?_vercel_share=zdvy6P36TctjApJ1lREvaXiGS41uzRIb`,
   );
 
   const { cart, addToCart, addToWishlist } = useContext(CartContext);

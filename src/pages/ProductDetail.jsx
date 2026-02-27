@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 const ProductDetail = () => {
   const { data, loading, error } = useFetch(
-    `https://shopping-jet-two.vercel.app/api/products`,
+    `https://shopping-kappa-five.vercel.app?_vercel_share=zdvy6P36TctjApJ1lREvaXiGS41uzRIb`,
   );
 
   const { addToCart, increment, decrement } = useContext(CartContext);
@@ -16,7 +16,6 @@ const ProductDetail = () => {
 
   const selectedProduct = data?.find((item) => item._id === productId);
   if (!selectedProduct) return <p>Loading...</p>;
-
 
   const sameCategoryProduct = data?.filter(
     (cat) => cat.productCategory === selectedProduct?.productCategory,
@@ -76,7 +75,7 @@ const ProductDetail = () => {
               {" "}
               <b>Discount:</b> {selectedProduct?.productDiscount}%
             </p>
-            
+
             <p>
               Size: <button className="btn btn-sm btn-light">S</button>{" "}
               <button className="btn btn-sm btn-light">M</button>{" "}
