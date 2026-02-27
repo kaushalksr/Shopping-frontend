@@ -31,19 +31,21 @@ const ProductListing = () => {
     );
   };
 
-  const filteredProducts = (data || [])
-    .filter((item) => item.productPrice <= maxPrice)
-    .filter((item) => item.productRating >= rating)
-    .sort((a, b) => {
-      if (sortType === "L2H") return a.productPrice - b.productPrice;
-      if (sortType === "H2L") return b.productPrice - a.productPrice;
-      return 0;
-    })
-    .filter((item) =>
-      selectedCategory.length === 0
-        ? true
-        : selectedCategory.includes(item.productCategory),
-    );
+  const filteredProducts = Array.isArray(data)
+    ? data
+    : []
+        .filter((item) => item.productPrice <= maxPrice)
+        .filter((item) => item.productRating >= rating)
+        .sort((a, b) => {
+          if (sortType === "L2H") return a.productPrice - b.productPrice;
+          if (sortType === "H2L") return b.productPrice - a.productPrice;
+          return 0;
+        })
+        .filter((item) =>
+          selectedCategory.length === 0
+            ? true
+            : selectedCategory.includes(item.productCategory),
+        );
 
   const handleReset = () => {
     setMaxPrice(5000);
