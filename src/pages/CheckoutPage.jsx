@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const CheckoutPage = () => {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [message, setMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
   const [formData, setFormData] = useState({
     fullAddress: "",
   });
@@ -26,6 +27,7 @@ const CheckoutPage = () => {
     setOrderData,
     orderData,
     setCart,
+    showAlert
   } = useContext(CartContext);
 
   const handleAddress = (value) => {
@@ -44,6 +46,7 @@ const CheckoutPage = () => {
       fullAddress: "",
     });
     setShowAddressForm(false);
+    
   };
 
   // SAVE ORDER
@@ -65,13 +68,17 @@ const CheckoutPage = () => {
 
     setOrderData((prev) => [...prev, newOrder]);
 
-    navigate("/orderHistory");
+    showAlert("ORDER PLACED SUCCESSFULLY !","success");
 
-    setCart([]);
+    setTimeout(() => {
+      navigate("/orderHistory");
+      setCart([]);
+    }, 3000);
   };
 
   const deleteAddress = (id) => {
     setAddress((prev) => prev.filter((item) => item.id !== id));
+    showAlert("Address deleted successfully!","danger")
   };
 
   useEffect(() => {
@@ -80,7 +87,6 @@ const CheckoutPage = () => {
     }
   }, [address]);
 
-  console.log("Selected address = ", selectedAddress);
 
   return (
     <div>
@@ -136,6 +142,9 @@ const CheckoutPage = () => {
                 </button>
               </div>
             ))}
+          <p className="m-1" style={{ color: "red" }}>
+            {message}
+          </p>
         </div>
         <div className="m-2">
           <h5>Order Details:</h5>
@@ -145,14 +154,14 @@ const CheckoutPage = () => {
                 <img src={item.productImage} alt="" height="70" width="60" />
               </div>
             ))}
-            <h5 className="my-5">
+            <h5 className="my-2">
               Total Price: ₹
               {totalPrice + totalDeliveryCharge - totalDiscount}{" "}
             </h5>
             <button onClick={saveOrder} className="btn btn-success w-50">
               Checkout
             </button>
-            <p>{message}</p>
+            <p className="m-2 fw-semibold" style={{ color: "green" }}>{successMessage}</p>
           </div>
         </div>
       </div>

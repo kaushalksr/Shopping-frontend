@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import Header from "../components/Header";
 import useFetch from "../useFetch";
 import { CartContext } from "../context/cartContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import star from "../logo/star.jpg";
 
 const ProductListing = () => {
   const [maxPrice, setMaxPrice] = useState(5000);
@@ -11,10 +12,10 @@ const ProductListing = () => {
   const [sortType, setSortType] = useState("");
 
   const { data, loading, error } = useFetch(
-    `https://shopping-jet-two.vercel.app/api/products`,
+    `http://localhost:3000/api/products`,
   );
 
-  const { addToCart, addToWishlist } = useContext(CartContext);
+  const { cart, addToCart, addToWishlist } = useContext(CartContext);
 
   const priceRangeInput = document.getElementById("priceRange");
   const priceRangeOutput = document.getElementById("priceRange2");
@@ -51,6 +52,10 @@ const ProductListing = () => {
     setSortType("");
   };
 
+  const navigate = useNavigate();
+
+ 
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error ocurred...</p>;
 
@@ -58,15 +63,14 @@ const ProductListing = () => {
     <div>
       <Header />
       <div className="container">
-        <p className="fs-1">Product Listing </p>
 
         <div className="row">
           <div className="col-lg-3 p-2 border fixed-box">
-            <h5>
+            <h5 className="d-flex justify-content-between" >
               {" "}
               Filters:{" "}
               <span>
-                <button onClick={handleReset}>Reset</button>
+                <Link className="text-decoration-none" onClick={handleReset}>Reset</Link>
               </span>{" "}
             </h5>
             <div className="m-2">
@@ -168,16 +172,34 @@ const ProductListing = () => {
           </div>
           <div className="col-lg-9 p-2 border">
             <div className="row">
-              {filteredProducts?.map((product) => (
+              {filteredProducts?.map((product) => {
+                const isInCart = cart.some((item)=>item._id === product._id);
+               return (
                 <div key={product._id} className="col-lg-4">
-                  <div className="card m-2 w-100">
+                  <div className="card m-2 w-100 text-center">
                     <Link to={`/product/${product._id}`}>
                       <img
-                        height={300}
+                        style={{ position: "relative" }}
+                        height={200}
                         src={product.productImage}
                         className="card-img-top"
                         alt={product.productName}
                       />
+                      <span
+                        className="btn btn-sm rounded-0 p-1 rounded-1"
+                        style={{
+                          position: "absolute",
+                          top: 5,
+                          left: 7,
+                        }}>
+                        <div className="d-inline-flex align-items-center bg-light px-2 py-1 rounded">
+                          <span className="fw-bold me-1">
+                            {product.productRating}
+                          </span>
+                          <span style={{ color: "green" }}>★</span>
+                        </div>
+                        {/* IMAGE */}
+                      </span>
                     </Link>
                     <div className="card-body p-0">
                       <div
@@ -194,27 +216,28 @@ const ProductListing = () => {
                           {" "}
                           <b>₹{product.productPrice}</b>{" "}
                         </p>
-                        <p className="card-text">
-                          <b>Rating:</b> {product.productRating}
-                        </p>
                       </div>
-                      <button
+                      <Link
                         onClick={() => addToWishlist(product)}
-                        style={{ borderRadius: 0 }}
-                        className="btn btn-secondary w-100">
-                        Add to WishList
-                      </button>{" "}
-                      <br /> <br />
+                        style={{ borderRadius: 0, color: "green" }}
+                        className="w-100 text-decoration-none">
+                        ADD TO WISHLIST
+                      </Link>{" "}
+                      <br />
                       <button
-                        onClick={() => addToCart(product)}
+                        onClick={() =>
+                          isInCart
+                            ? navigate("/cartlist")
+                            : addToCart(product)
+                        }
                         style={{ borderRadius: 0 }}
-                        className="btn btn-primary w-100">
-                        Add to Cart
+                        className="w-100 text-decoration-none border-0">
+                        {isInCart ? "GO TO CART" : "ADD TO CART"}
                       </button>
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           </div>
         </div>

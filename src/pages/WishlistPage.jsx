@@ -2,12 +2,13 @@ import { useContext } from "react";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
 import useFetch from "../useFetch";
-
+import { Link } from "react-router-dom";
 const WishlistPage = () => {
-  const { wishlist, addToCart, setWishlist } = useContext(CartContext);
+  const { wishlist, addToCart, setWishlist,showAlert } = useContext(CartContext);
   const handleMoveTocart = (item) => {
     addToCart(item);
     setWishlist((prev) => prev.filter((prod) => prod._id !== item._id));
+    showAlert("Item Moved to cart","success")
   };
   return (
     <div>
@@ -15,22 +16,36 @@ const WishlistPage = () => {
       <div className="container p-4">
         <p className="text-center">
           {" "}
-          <b>MY WISHLIST</b>{" "}
+          <h2
+            style={{
+              background: "linear-gradient(90deg, #667eea, #764ba2)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontWeight: "700",
+            }}>
+            MY WISHLIST
+          </h2>{" "}
         </p>
         <div className="row">
           {wishlist.length === 0 ? (
-            <h2>Wishlist is empty</h2>
+            <div className="text-center d-flex justify-content-center">
+              <img
+                style={{ height: "90%", width: "60%" }}
+                src="https://behalacollege.in/display_board/assets/images/empty-wishlist.png"
+                alt="emptyWishlist"
+              />
+            </div>
           ) : (
             wishlist?.map((item) => (
-              <div className="col-lg-3 m-1 ">
+              <div className="col-lg-2 m-1 ">
                 <div class="card w-100">
                   <img
-                    style={{ height: 250 }}
+                    style={{ height: 200 }}
                     src={item.productImage}
                     className="card-img-top"
                     alt="..."
                   />
-                  <div className="card-body p-0">
+                  <div className="card-body p-0 text-center">
                     <h5 className="card-title text-center">
                       {"  "}
                       {item.productName}
@@ -39,12 +54,12 @@ const WishlistPage = () => {
                     <p className="card-text text-center">
                       {"  "}₹{item.productPrice}
                     </p>
-                    <button
+                    <Link
                       onClick={() => handleMoveTocart(item)}
-                      style={{ borderRadius: 0 }}
-                      className="btn btn-secondary w-100">
-                      Move to Cart
-                    </button>
+                      style={{ border: "none", textDecoration: "none" }}
+                      className="w-100 ">
+                      <b> MOVE TO CART</b>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 const ProductDetail = () => {
   const { data, loading, error } = useFetch(
-    `https://shopping-jet-two.vercel.app/api/products`,
+    `http://localhost:3000/api/products`,
   );
 
   const { addToCart, increment, decrement } = useContext(CartContext);
@@ -16,6 +16,7 @@ const ProductDetail = () => {
 
   const selectedProduct = data?.find((item) => item._id === productId);
   if (!selectedProduct) return <p>Loading...</p>;
+
 
   const sameCategoryProduct = data?.filter(
     (cat) => cat.productCategory === selectedProduct?.productCategory,
@@ -30,46 +31,52 @@ const ProductDetail = () => {
       <div className="container">
         <div className="row mt-2 p-2">
           <div className="col-lg-4 col-md-4 col-sm-12">
-            <div className="card ">
-              <img
-                height={400}
-                src={selectedProduct?.productImage}
-                className="card-img-top m-0"
-                alt={selectedProduct?.productName}
-              />
+            <div className="card text-center">
+              <div>
+                <img
+                  height={250}
+                  src={selectedProduct?.productImage}
+                  className="card-img-top m-0"
+                  alt={selectedProduct?.productName}
+                />
+                <span
+                  className="btn btn-sm rounded-0 p-1 rounded-1"
+                  style={{
+                    position: "absolute",
+                    top: 5,
+                    left: 7,
+                  }}>
+                  <div className="d-inline-flex align-items-center bg-light px-2 py-1 rounded">
+                    <span className="fw-bold me-1">
+                      {selectedProduct?.productRating}
+                    </span>
+                    <span style={{ color: "green" }}>★</span>
+                  </div>
+                  {/* IMAGE */}
+                </span>
+              </div>
 
               <br />
-              <button
+              <Link
                 onClick={() => addToCart(selectedProduct)}
-                className="btn btn-secondary rounded-0">
-                Add to Cart
-              </button>
+                className="rounded-0 text-decoration-none">
+                ADD TO CART
+              </Link>
             </div>
           </div>
           <div className="col-lg-8 col-md-4 col-sm-12">
-            <p className="fs-1">
+            <p className="fs-5 fw-semibold m-0">
               {selectedProduct?.productCategory} {selectedProduct?.productName}
             </p>
-            <p>Rating: {selectedProduct?.productRating}</p>
-            <p>Price: ₹{selectedProduct?.productPrice}</p>
-            <p>Discount: {selectedProduct?.productDiscount}%</p>
-            <p>
-              Quantity:{" "}
-              <button
-                style={{ backgroundColor: "grey" }}
-                onClick={() => decrement(selectedProduct?._id)}
-                className="btn btn-sm rounded-circle">
-                -
-              </button>{" "}
-              {"  "}
-              <b>{selectedProduct?.productQuantity}</b>{" "}
-              <button
-                style={{ backgroundColor: "grey" }}
-                onClick={() => increment(selectedProduct?._id)}
-                className="btn btn-sm rounded-circle">
-                +
-              </button>{" "}
+            <p className="m-0">
+              {" "}
+              <b>Price:</b> ₹{selectedProduct?.productPrice}
             </p>
+            <p>
+              {" "}
+              <b>Discount:</b> {selectedProduct?.productDiscount}%
+            </p>
+            
             <p>
               Size: <button className="btn btn-sm btn-light">S</button>{" "}
               <button className="btn btn-sm btn-light">M</button>{" "}
@@ -78,15 +85,15 @@ const ProductDetail = () => {
             <hr />
             <div className="row">
               <img
-                style={{ height: 120, width: "50%" }}
+                style={{ height: 60, width: "50%" }}
                 src={ecom}
                 alt="ecomImages"
               />
             </div>
             <hr />
             <div>
-              <p className="fs-5">Description:</p>
-              <p className="fs-5">{selectedProduct?.productDescription}</p>
+              <p className="fs-5 fw-semibold p-0 m-0">Description:</p>
+              <p className=" m-0 p-0">{selectedProduct?.productDescription}</p>
             </div>
           </div>
         </div>

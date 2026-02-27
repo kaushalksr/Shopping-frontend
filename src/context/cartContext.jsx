@@ -5,6 +5,30 @@ export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  const [alert, setAlert] = useState({
+    show: false,
+    message: "",
+    type: "success", 
+  });
+
+  const showAlert = (message, type = "success") => {
+    setAlert({
+      show: true,
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setAlert({
+        show: false,
+        message: "",
+        type: "success",
+      });
+    }, 3000);
+  };
 
   const [cart, setCart] = useState(() => {
     const storedCartValue = localStorage.getItem("cart");
@@ -43,12 +67,6 @@ const CartProvider = ({ children }) => {
 
   const [orderData, setOrderData] = useState([]);
 
-  // useEffect(() => {
-  //   if (Array.isArray(order)) {
-  //     localStorage.setItem("order", JSON.stringify(order));
-  //   }
-  // });
-
   useEffect(() => {
     if (Array.isArray(cart)) {
       setProducts(cart);
@@ -59,11 +77,18 @@ const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     if (products.some((item) => item._id === product._id)) {
       increment(product._id);
-    } else setCart((prevValue) => [...prevValue, product]);
+      showAlert("Item Added to cart", "success");
+    } else {
+      setCart((prevValue) => [...prevValue, product]);
+      showAlert("Item Added to cart", "success");
+    }
   };
 
   const addToWishlist = (product) => {
-    setWishlist((prevValue) => [...prevValue, product]);
+    if (!wishlist.some((item) => item._id === product._id)) {
+      setWishlist((prevValue) => [...prevValue, product]);
+      showAlert("Item added to wishlist", "success");
+    }
   };
 
   const increment = (id) => {
@@ -108,6 +133,12 @@ const CartProvider = ({ children }) => {
         setAddress,
         selectedAddress,
         setSelectedAddress,
+        filteredProducts,
+        setFilteredProducts,
+        searchText,
+        setSearchText,
+        alert,
+        showAlert,
       }}>
       {children}
     </CartContext.Provider>
