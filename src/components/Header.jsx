@@ -14,11 +14,12 @@ const Header = () => {
     wishlist,
     setFilteredProducts,
     filteredProducts,
-    alert,showAlert
+    alert,
+    showAlert,
   } = useContext(CartContext);
 
   const { data, loading, error } = useFetch(
-    "https://shopping-jet-two.vercel.app/api/products",
+    "https://shopping-hekk7sy1v-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
   );
 
   useEffect(() => {
