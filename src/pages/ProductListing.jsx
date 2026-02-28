@@ -33,7 +33,6 @@ const ProductListing = () => {
 
   const filteredProducts = Array.isArray(data)
     ? data
-    : []
         .filter((item) => item.productPrice <= maxPrice)
         .filter((item) => item.productRating >= rating)
         .sort((a, b) => {
@@ -45,7 +44,8 @@ const ProductListing = () => {
           selectedCategory.length === 0
             ? true
             : selectedCategory.includes(item.productCategory),
-        );
+        )
+    : [];
 
   const handleReset = () => {
     setMaxPrice(5000);
