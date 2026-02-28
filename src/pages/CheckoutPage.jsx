@@ -102,6 +102,12 @@ const CheckoutPage = () => {
             className="btn btn-success btn-sm p-1">
             + Add new Address
           </button>{" "}
+          {address.length < 1 && (
+            <p style={{ color: "red" }}>Please add Address</p>
+          )}
+          {!selectedAddress && (
+            <p style={{ color: "red" }}>Please select Address</p>
+          )}
         </p>
         {showAddressForm && (
           <div>
