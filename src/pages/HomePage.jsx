@@ -11,7 +11,7 @@ const HomePage = () => {
     <div style={{ backgroundColor: "#d7e3ef" }}>
       <Header />
       {filteredProducts?.length > 0 ? (
-        <div className="row">
+        <div className="row mt-2">
           {filteredProducts?.map((product) => {
             const isInCart = cart.some((item) => item._id === product._id);
             return (
@@ -79,7 +79,7 @@ const HomePage = () => {
           })}
         </div>
       ) : filteredProducts?.length === 0 && searchText === "" ? (
-        <div className="container">
+        <div className="container mt-2">
           <div className="row my-3" style={{ justifyContent: "center" }}>
             <Link
               to="/api/products"
