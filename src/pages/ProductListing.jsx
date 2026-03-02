@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import useFetch from "../useFetch";
 import { CartContext } from "../context/cartContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import star from "../logo/star.jpg";
 
 const ProductListing = () => {
   const [maxPrice, setMaxPrice] = useState(5000);
@@ -16,12 +15,6 @@ const ProductListing = () => {
   );
 
   const { cart, addToCart, addToWishlist } = useContext(CartContext);
-
-  const priceRangeInput = document.getElementById("priceRange");
-  const priceRangeOutput = document.getElementById("priceRange2");
-  priceRangeInput?.addEventListener("input", function () {
-    priceRangeOutput.textContent = this.value;
-  });
 
   const handleCategoryChange = (category) => {
     setSelectedCategory((prev) =>

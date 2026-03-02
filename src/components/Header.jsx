@@ -39,7 +39,7 @@ const Header = () => {
     setFilteredProducts(filtered);
   }, [searchText]);
 
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
   if (error) return <p>Error ocurred!!</p>;
 
   return (

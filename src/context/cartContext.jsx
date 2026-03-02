@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import useFetch from "../useFetch";
 
 export const CartContext = createContext();
 
@@ -11,7 +10,7 @@ const CartProvider = ({ children }) => {
   const [alert, setAlert] = useState({
     show: false,
     message: "",
-    type: "success", 
+    type: "success",
   });
 
   const showAlert = (message, type = "success") => {
@@ -74,7 +73,7 @@ const CartProvider = ({ children }) => {
     }
   }, [cart, products]);
 
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
     if (products.some((item) => item._id === product._id)) {
       increment(product._id);
       showAlert("Item Added to cart", "success");
