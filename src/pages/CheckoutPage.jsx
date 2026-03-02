@@ -79,11 +79,8 @@ const CheckoutPage = () => {
   const [deletedAddress, setDeletedAddress] = useState(null);
 
   const deleteAddress = (id) => {
-    
-
     setAddress((prev) => prev.filter((add) => add.id !== id));
     if (selectedAddress === deletedAddress) setSelectedAddress(null);
-    window.location.reload()
   };
 
   useEffect(() => {
