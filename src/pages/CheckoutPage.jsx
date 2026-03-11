@@ -14,7 +14,6 @@ const CheckoutPage = () => {
     fullAddress: "",
   });
   const [editId, setEditId] = useState(null);
-  const [addressInput, setAddressInput] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,7 +43,6 @@ const CheckoutPage = () => {
       setEditId(null);
       setShowAddressForm(false);
       showAlert("Address Updated Successfully!", "success");
-      window.location.reload()
     } else {
       if (!value || value.length < 5) {
         showAlert("Please Enter Complete Address", "danger");
@@ -68,34 +66,7 @@ const CheckoutPage = () => {
     }
   };
 
-  // const saveAddress = (value) => {
-  //   console.log("address input=",addressInput)
-  //   setAddressInput(value)
-  //   if (editId) {
 
-  //     const updatedAddress = address.map((item) =>
-  //       item.id === editId ? { ...item, fullAddress: addressInput } : item,
-  //     );
-  //     console.log("updatedAddress=",updatedAddress)
-
-  //     setAddress(updatedAddress);
-  //   } else {
-  //     if (!value || value.length < 5)
-  //       showAlert("Please Enter Complete Address", "danger");
-  //     else {
-  //       const newAddress = {
-  //         id: Date.now(),
-  //         ...formData,
-  //       };
-  //       setAddress((prev) => [...prev, newAddress]);
-  //       setFormData({
-  //         fullAddress: "",
-  //       });
-  //       setShowAddressForm(false);
-  //     }
-  //     showAlert("Address Added Successfully!", "success");
-  //   }
-  // };
 
   // UPDATE ADDRESS
 

@@ -5,6 +5,8 @@
   text-align: center;
 } */
 
+
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -33,87 +35,7 @@
   }
 }
 
-/* .card {
-  padding: 2em;
-} */
 
-/* .read-the-docs {
-  color: #888;
-} */
-
-/* .loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid;
-  border-color: #FF3D00 transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}  */
-
-/* .heart-container {
-  cursor: pointer;
-  display: inline-block;
-}
-
-.heart-container input {
-  /* display: none; 
-  opacity: 0;
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-/* .heart {
-  width: 20px;
-  height: 20px;
-  position: relative;
-  display: inline-block;
-  background-color: #ccc;
-  transform: rotate(-45deg);
-  transition: 0.3s;
-}
-
-.heart:before,
-.heart:after {
-  content: "";
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  background-color: #ccc;
-  border-radius: 50%;
-}
-
-.heart:before {
-  top: -10px;
-  left: 0;
-}
-
-.heart:after {
-  left: 10px;
-  top: 0;
-}
-
-.heart-container input:checked + .heart {
-  z-index: 9999;
-  background-color: #e31717;
-}
-
-.heart-container input:checked + .heart:before,
-.heart-container input:checked + .heart:after {
-  z-index: 9999;
-  background-color: #e31717;
-}  */
 
 .heart-container {
   cursor: pointer;
