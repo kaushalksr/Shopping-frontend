@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { CartContext } from "../context/cartContext";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 const Cart = () => {
-  const { cart, setCart,showAlert, addToWishlist } = useContext(CartContext);
+  const { cart, setCart, showAlert, addToWishlist } = useContext(CartContext);
   const {
     increment,
     decrement,
@@ -12,18 +13,26 @@ const Cart = () => {
     totalPrice,
     totalDiscount,
     totalDeliveryCharge,
+    selectedSize
   } = useContext(CartContext);
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item._id !== id));
-    showAlert("Item Removed","danger")
+    const product = cart.find((item) => item.cartId === id);
+    setCart((prev) => prev.filter((item) => item.cartId !== id));
+    showAlert(
+      `${product.productName} (${product.size}) removed from cart!`,
+      "danger",
+    );
   };
+ 
 
   const handleMoveToWishlist = (item) => {
     addToWishlist(item);
-    setCart((prev) => prev.filter((product) => product._id !== item._id));
-    showAlert("Item Moved to wishlist","success")
+    setCart((prev) => prev.filter((product) => product.cartId !== item.cartId));
+    showAlert(`${item.productName} moved to wishlist`, "warning");
   };
+
+ 
 
   return (
     <div>
@@ -44,7 +53,15 @@ const Cart = () => {
         <div className={products.length === 0 ? "col-lg-12" : "col-lg-8"}>
           {products.length === 0 ? (
             <div className="justify-content-center text-center align-items-center">
-              <h2>Your cart is empty</h2>
+              <p className="fs-5">
+                Your cart is empty!{" "}
+                <span>
+                  {" "}
+                  <Link to="/api/products" style={{ color: "blue" }}>
+                    shop now
+                  </Link>
+                </span>
+              </p>
               <img
                 src="https://cdn-icons-png.flaticon.com/256/11329/11329060.png"
                 alt="cartEmpty"
@@ -55,28 +72,26 @@ const Cart = () => {
               <div className="row">
                 <div className="col-lg-12 ">
                   <div className="row m-2">
-                    <div key={item._id} className="col-lg-3 ">
+                    <div key={item._id} className="col-lg-3">
                       <img
-                        style={{ height: 116 }}
-                        className="w-100 img-fluid"
+                        style={{height:100 }}
+                        className="img-fluid m-1"
                         src={item.productImage}
                         alt="productImage"
                       />
 
-                      <p className="d-flex my-2">
+                      <p className="d-flex">
                         <button
-                          onClick={() => decrement(item._id)}
-                          className="p-0 mx-1 btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
+                          onClick={() => decrement(item.cartId)}
+                          className={` ${item.quantity === 1 ? "disabled" : "active"} p-0 btn btn-primary rounded-circle d-flex align-items-center justify-content-center`}
                           style={{ width: 25, height: 25 }}>
                           -
                         </button>{" "}
                         {"  "}
-                        <b className="px-4 border">
-                          {item.productQuantity}
-                        </b>{" "}
+                        <b className="px-2 border">{item.quantity}</b>{" "}
                         <button
-                          onClick={() => increment(item._id)}
-                          className="p-0 mx-1 btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
+                          onClick={() => increment(item.cartId)}
+                          className="p-0 btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
                           style={{ width: 25, height: 25 }}>
                           +
                         </button>{" "}
@@ -87,28 +102,28 @@ const Cart = () => {
                     <div
                       className="col-lg-6"
                       style={{ textAlign: "left", justifyContent: "left" }}>
-                      <p className="fs-5">
-                        {item.productCategory} {item.productName}
+                      <p className="fs-5 m-0 p-0">
+                        {item.productCategory} {item.productName} ({item.size})
                       </p>
-                      <p className="fs-5">
+
+                      <p className="fs-5 m-0 p-0">
                         {" "}
                         <b>₹{item.productPrice}</b>{" "}
                       </p>
-                      <p style={{ color: "grey" }}>
+                      <i style={{ color: "green", fontWeight: "bolder" }}>
                         {item.productDiscount}% OFF
-                      </p>
+                      </i>
 
-                      <div className="d-flex justify-content-between">
+                      <div className="d-flex gap-3 my-2">
                         <Link
-                          onClick={() => removeFromCart(item._id)}
-                          style={{ color: "red" }}
-                          className="w-100 rounded-0 text-decoration-none">
-                          REMOVE
+                          onClick={() => removeFromCart(item.cartId)}
+                          className="rounded-0 text-decoration-none btn btn-outline-danger rounded-5 border-5">
+                          <b> REMOVE</b>
                         </Link>
                         <Link
                           onClick={() => handleMoveToWishlist(item)}
-                          className="w-100 rounded-0 text-decoration-none">
-                          MOVE TO WISHLIST
+                          className="rounded-0 text-decoration-none btn btn-outline-secondary rounded-5 border-5">
+                          <b>MOVE TO WISHLIST</b>
                         </Link>
                       </div>
                     </div>
@@ -170,6 +185,7 @@ const Cart = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

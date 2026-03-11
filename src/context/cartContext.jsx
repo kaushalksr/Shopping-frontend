@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
 
   const [alert, setAlert] = useState({
     show: false,
@@ -26,7 +28,7 @@ const CartProvider = ({ children }) => {
         message: "",
         type: "success",
       });
-    }, 3000);
+    }, 1000);
   };
 
   const [cart, setCart] = useState(() => {
@@ -49,18 +51,17 @@ const CartProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
   const totalPrice = cart?.reduce((acc, curr) => {
-    acc += curr.productPrice * curr.productQuantity;
+    acc += curr.productPrice * curr.quantity;
     return acc;
   }, 0);
 
   const totalDiscount = cart?.reduce((acc, curr) => {
-    acc +=
-      ((curr.productDiscount * curr.productPrice) / 100) * curr.productQuantity;
+    acc += ((curr.productDiscount * curr.productPrice) / 100) * curr.quantity;
     return acc;
   }, 0);
 
   const totalDeliveryCharge = cart?.reduce((acc, curr) => {
-    acc += curr.productDeliveryCharge * curr.productQuantity;
+    acc += curr.productDeliveryCharge * curr.quantity;
     return acc;
   }, 0);
 
@@ -73,29 +74,57 @@ const CartProvider = ({ children }) => {
     }
   }, [cart, products]);
 
-  const addToCart = async (product) => {
-    if (products.some((item) => item._id === product._id)) {
-      increment(product._id);
-      showAlert("Item Added to cart", "success");
-    } else {
-      setCart((prevValue) => [...prevValue, product]);
-      showAlert("Item Added to cart", "success");
+  const addToCart = (product) => {
+    if (!selectedSize) {
+      showAlert(`Please select size of ${product.productName}`, "danger");
+      return;
     }
+    if (!product.size) {
+      const cartItem = {
+        ...product,
+        size: selectedSize,
+        quantity: product.productQuantity,
+        cartId: product._id + "_" + selectedSize,
+      };
+      setCart((prevValue) => [...prevValue, cartItem]);
+    } else {
+      const cartItem = {
+        ...product,
+        size: product.size,
+        quantity: product.productQuantity,
+        cartId: product._id + "_" + product.size,
+      };
+      setCart((prevValue) => [...prevValue, cartItem]);
+    }
+
+    showAlert(`${product.productName} added to cart`, "success");
   };
 
+ 
+
   const addToWishlist = (product) => {
-    if (!wishlist.some((item) => item._id === product._id)) {
-      setWishlist((prevValue) => [...prevValue, product]);
-      showAlert("Item added to wishlist", "success");
-    }
+    !product.size ? (product.size = "M") : product.size;
+    const wishListItem = {
+      ...product,
+      size: product.size,
+      wishListId: product._id + Math.random(),
+    };
+    setWishlist((prevValue) => [...prevValue, wishListItem]);
+    showAlert(`${product.productName} added to wishlist`, "success");
+  };
+
+  const removeFromWishlist = (product) => {
+    setWishlist((prevState) =>
+      prevState.filter((item) => item._id !== product._id),
+    );
+
+    showAlert(`${product.productName} removed from wishlist`, "danger");
   };
 
   const increment = (id) => {
     setCart((prevValue) =>
       prevValue.map((item) =>
-        item._id === id
-          ? { ...item, productQuantity: item.productQuantity + 1 }
-          : item,
+        item.cartId === id ? { ...item, quantity: item.quantity + 1 } : item,
       ),
     );
   };
@@ -103,12 +132,14 @@ const CartProvider = ({ children }) => {
   const decrement = (id) => {
     setCart((prevValue) =>
       prevValue.map((item) =>
-        item._id === id && item.productQuantity > 1
-          ? { ...item, productQuantity: item.productQuantity - 1 }
+        item.cartId === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
           : item,
       ),
     );
   };
+
+  // loader
 
   return (
     <CartContext.Provider
@@ -138,6 +169,9 @@ const CartProvider = ({ children }) => {
         setSearchText,
         alert,
         showAlert,
+        removeFromWishlist,
+        selectedSize,
+        setSelectedSize,
       }}>
       {children}
     </CartContext.Provider>

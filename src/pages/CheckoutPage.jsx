@@ -4,14 +4,17 @@ import { CartContext } from "../context/cartContext";
 import deleteImg from "../logo/deleteImg.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const CheckoutPage = () => {
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [message, setMessage] = useState();
-  const [successMessage, setSuccessMessage] = useState();
   const [formData, setFormData] = useState({
     fullAddress: "",
   });
+  const [editId, setEditId] = useState(null);
+  const [addressInput, setAddressInput] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,23 +33,77 @@ const CheckoutPage = () => {
     showAlert,
   } = useContext(CartContext);
 
-  const handleAddress = (value) => {
-    setFormData({ fullAddress: value });
-  };
   // SAVE ADDRESS
-  const saveAddress = () => {
-    if (address.length === 0) setSelectedAddress(null);
-    const newAddress = {
-      id: Date.now(),
-      ...formData,
-    };
 
-    setAddress((prev) => [...prev, newAddress]);
+  const saveAddress = (value) => {
+    if (editId) {
+      const updatedAddress = address.map((item) =>
+        item.id === editId ? { ...item, fullAddress: value } : item,
+      );
+      setAddress(updatedAddress);
+      setEditId(null);
+      setShowAddressForm(false);
+      showAlert("Address Updated Successfully!", "success");
+      window.location.reload()
+    } else {
+      if (!value || value.length < 5) {
+        showAlert("Please Enter Complete Address", "danger");
+        return;
+      }
 
-    setFormData({
-      fullAddress: "",
-    });
-    setShowAddressForm(false);
+      const newAddress = {
+        id: Date.now(),
+        ...formData,
+        fullAddress: value,
+      };
+
+      setAddress((prev) => [...prev, newAddress]);
+
+      setFormData({
+        fullAddress: "",
+      });
+
+      setShowAddressForm(false);
+      showAlert("Address Added Successfully!", "success");
+    }
+  };
+
+  // const saveAddress = (value) => {
+  //   console.log("address input=",addressInput)
+  //   setAddressInput(value)
+  //   if (editId) {
+
+  //     const updatedAddress = address.map((item) =>
+  //       item.id === editId ? { ...item, fullAddress: addressInput } : item,
+  //     );
+  //     console.log("updatedAddress=",updatedAddress)
+
+  //     setAddress(updatedAddress);
+  //   } else {
+  //     if (!value || value.length < 5)
+  //       showAlert("Please Enter Complete Address", "danger");
+  //     else {
+  //       const newAddress = {
+  //         id: Date.now(),
+  //         ...formData,
+  //       };
+  //       setAddress((prev) => [...prev, newAddress]);
+  //       setFormData({
+  //         fullAddress: "",
+  //       });
+  //       setShowAddressForm(false);
+  //     }
+  //     showAlert("Address Added Successfully!", "success");
+  //   }
+  // };
+
+  // UPDATE ADDRESS
+
+  const editAddress = (addId) => {
+    setShowAddressForm(true);
+    const addressToUpdate = address.find((add) => add.id === addId).fullAddress;
+    setFormData({ fullAddress: addressToUpdate });
+    setEditId(addId);
   };
 
   // SAVE ORDER
@@ -54,7 +111,7 @@ const CheckoutPage = () => {
   const saveOrder = (event) => {
     event.preventDefault();
 
-    if (!selectedAddress || selectedAddress === null || address.length < 1) {
+    if (!selectedAddress || selectedAddress === "" || address.length < 1) {
       setMessage("Please Select Address!");
       return;
     }
@@ -68,19 +125,27 @@ const CheckoutPage = () => {
 
     setOrderData((prev) => [...prev, newOrder]);
 
-    showAlert("ORDER PLACED SUCCESSFULLY !", "success");
+    showAlert(
+      "ORDER PLACED SUCCESSFULLY!  ---> Pls wait while redirecting...",
+      "success",
+    );
 
     setTimeout(() => {
       navigate("/orderHistory");
       setCart([]);
-    }, 3000);
+      setSelectedAddress("");
+    }, 10);
   };
 
-  const [deletedAddress, setDeletedAddress] = useState(null);
-
   const deleteAddress = (id) => {
+    const deletedAdd = address.find((add) => add.id === id);
+
     setAddress((prev) => prev.filter((add) => add.id !== id));
-    if (selectedAddress === deletedAddress) setSelectedAddress(null);
+
+    if (deletedAdd && deletedAdd?.fullAddress === selectedAddress) {
+      setSelectedAddress("");
+    }
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -93,91 +158,115 @@ const CheckoutPage = () => {
     <div>
       <Header />
       <div className="container py-2">
-        <p className="fs-5">
-          Address:{" "}
-          <button
-            onClick={() => setShowAddressForm(true)}
-            className="btn btn-success btn-sm p-1">
-            + Add new Address
-          </button>{" "}
-          {address.length < 1 && (
-            <p style={{ color: "red" }}>Please add Address</p>
-          )}
-          {!selectedAddress && (
-            <p style={{ color: "red" }}>Please select Address</p>
-          )}
-        </p>
-        {showAddressForm && (
-          <div>
-            <textarea
-              value={formData.fullAddress}
-              type="text"
-              onChange={(e) => handleAddress(e.target.value)}
-              placeholder="Enter full Address"
-            />{" "}
-            <br />
-            <button
-              onClick={saveAddress}
-              type="submit"
-              className="btn btn-sm btn-success p-1">
-              Save Address
-            </button>
-          </div>
-        )}
-        <div className="row m-2">
-          {address &&
-            address.map((add) => (
-              <div
-                className={`col-lg-3 d-flex justify-content-between border p-3 ${selectedAddress === add.fullAddress ? "border-success border-4" : "border"}`}
-                onClick={() => setSelectedAddress(add.fullAddress)}
-                style={{
-                  padding: 10,
-                  marginBottom: 10,
-                  cursor: "pointer",
-                  borderRadius: 6,
-                }}>
-                {add.fullAddress}
+        <div className="row">
+          <div className="col-lg-12 col-sm-12 mb-4">
+            <p className="fs-3">
+              Manage Addresses <br />
+              <button
+                onClick={() => setShowAddressForm(true)}
+                className="btn w-100 border">
+                <p className="fs-3">+ ADD NEW ADDRESS</p>
+              </button>{" "}
+              {address.length < 1 && (
+                <p style={{ color: "red" }}>Please add Address</p>
+              )}
+              {!selectedAddress && selectedAddress === "" && (
+                <p style={{ color: "red" }}>Please select Address</p>
+              )}
+            </p>
+            {showAddressForm && (
+              <div>
+                <textarea
+                  value={formData.fullAddress}
+                  type="text"
+                  rows="5"
+                  id="addressInput"
+                  col="20"
+                  onChange={(e) => setFormData({ fullAddress: e.target.value })}
+                  placeholder="Enter full Address"
+                />{" "}
+                <br />
                 <button
-                  onClick={() => deleteAddress(add.id)}
-                  className="btn-danger btn btn-sm">
-                  {" "}
-                  <img
-                    style={{ height: 10, width: 10, padding: 0 }}
-                    src={deleteImg}
-                    alt=""
-                  />{" "}
+                  onClick={() => saveAddress(formData.fullAddress)}
+                  type="submit"
+                  className="btn btn-sm btn-primary p-1">
+                  {editId ? "UPDATE ADDRESS" : "SAVE ADDRESS"}
                 </button>
               </div>
-            ))}
-          <p className="m-1" style={{ color: "red" }}>
-            {message}
-          </p>
-        </div>
-        <div className="m-2">
-          <h5>Order Details:</h5>
-          <div className="row">
-            {products.map((item) => (
-              <div className="col-auto m-0 p-0">
-                <img src={item.productImage} alt="" height="70" width="60" />
-              </div>
-            ))}
-            <h5 className="my-2">
-              Total Price: ₹
-              {totalPrice + totalDeliveryCharge - totalDiscount}{" "}
-            </h5>
-            {address.length > 0 &&
-              selectedAddress &&
-              selectedAddress !== deletedAddress && (
-                <button onClick={saveOrder} className="btn btn-success w-50">
+            )}
+            <div className="row m-2">
+              {address &&
+                address.map((add) => (
+                  <div
+                    className={`col-lg-12 d-flex justify-content-between border p-3 ${selectedAddress === add.fullAddress ? "border-primary border-4" : "border"}`}
+                    onClick={() => setSelectedAddress(add.fullAddress)}
+                    style={{
+                      padding: 10,
+                      marginBottom: 10,
+                      cursor: "pointer",
+                      borderRadius: 6,
+                    }}>
+                    {add.fullAddress}
+                    <div>
+                      <button
+                        onClick={() => editAddress(add.id)}
+                        className="btn-warning btn btn-sm mx-2">
+                        {" "}
+                        <img
+                          style={{ height: 15, width: 15, padding: 0 }}
+                          src="https://cdn-icons-png.freepik.com/512/8747/8747675.png"
+                          alt="EditButton"
+                        />{" "}
+                      </button>
+                      <button
+                        onClick={() => deleteAddress(add.id)}
+                        className="btn-danger btn btn-sm mx-2">
+                        {" "}
+                        <img
+                          style={{ height: 15, width: 15, padding: 0 }}
+                          src={deleteImg}
+                          alt="DeleteButton"
+                        />{" "}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              <p className="m-1" style={{ color: "red" }}>
+                {message}
+              </p>
+            </div>
+          </div>
+          <div className="col-lg-12 col-sm-12 mx-auto">
+            <p className="fs-3 fw-bold">ORDER DETAILS</p>
+            <div className="row">
+              {products.map((item) => (
+                <div className="col-auto m-0 p-0">
+                  <img src={item.productImage} alt="" height="70" width="60" />
+                  <p
+                    style={{
+                      color: "#000",
+                      backgroundColor: "#fff",
+                      padding: 2,
+                      alignItems: "center",
+                    }}>
+                    (<b>{item.size}</b>) x {item.quantity}
+                  </p>
+                </div>
+              ))}
+              <h3 className="my-2 p-0">
+                Total Price: ₹
+                {totalPrice + totalDeliveryCharge - totalDiscount}{" "}
+              </h3>
+              {address.length > 0 && selectedAddress !== "" && (
+                <button onClick={saveOrder} className="btn btn-primary w-50">
                   Checkout
                 </button>
               )}
-            <p className="m-2 fw-semibold" style={{ color: "green" }}>
-              {successMessage}
-            </p>
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

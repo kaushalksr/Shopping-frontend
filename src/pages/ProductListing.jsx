@@ -1,8 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import useFetch from "../useFetch";
 import { CartContext } from "../context/cartContext";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import "../App.css";
+import Footer from "../components/Footer";
+import ProductCard from "./ProductCard";
+import Loader from "../components/Loader";
 
 const ProductListing = () => {
   const [maxPrice, setMaxPrice] = useState(5000);
@@ -11,10 +15,18 @@ const ProductListing = () => {
   const [sortType, setSortType] = useState("");
 
   const { data, loading, error } = useFetch(
-    "https://shopping-xngt.vercel.app/api/products",
+    "https://shopping-backend-98whru07p-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
   );
 
-  const { cart, addToCart, addToWishlist } = useContext(CartContext);
+  const {
+    cart,
+    addToCart,
+    addToWishlist,
+    wishlist,
+    removeFromWishlist,
+    loader,
+    setLoader,
+  } = useContext(CartContext);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory((prev) =>
@@ -49,13 +61,21 @@ const ProductListing = () => {
 
   const navigate = useNavigate();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error ocurred...</p>;
 
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="container mb-5">
+        <Link className="btn btn-outline-secondary py-2 mb-4 px-5 " to="/">
+          <img
+            height={30}
+            width={30}
+            src="https://www.svgrepo.com/show/18507/back-button.svg"
+            alt="BACK button"
+          />
+        </Link>
         <div className="row">
           <div className="col-lg-3 p-2 border fixed-box">
             <h5 className="d-flex justify-content-between">
@@ -84,152 +104,203 @@ const ProductListing = () => {
 
             <div className="m-2">
               <h4>Category:</h4>
-              <input
-                type="checkbox"
-                name="category"
-                value="Men"
-                checked={selectedCategory.includes("Men")}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-              />{" "}
-              Men Clothing <br />
-              <input
-                type="checkbox"
-                name="category"
-                value="Women"
-                checked={selectedCategory.includes("Women")}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-              />{" "}
-              Women Clothing <br />
-              <input
-                type="checkbox"
-                name="category"
-                value="Kid"
-                checked={selectedCategory.includes("Kid")}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-              />{" "}
-              Kid Clothing <br />
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="checkbox"
+                    name="category"
+                    value="Men"
+                    id="men"
+                    checked={selectedCategory.includes("Men")}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                  />{" "}
+                  <label
+                    htmlFor="men"
+                    className="form-check-label stretched-link">
+                    {" "}
+                    Men Clothing
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="checkbox"
+                    name="category"
+                    value="Women"
+                    id="women"
+                    checked={selectedCategory.includes("Women")}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                  />
+                  <label
+                    htmlFor="women"
+                    className="form-input-label  stretched-link">
+                    Women Clothing
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="checkbox"
+                    name="category"
+                    value="Kid"
+                    id="kid"
+                    checked={selectedCategory.includes("Kid")}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                  />{" "}
+                  <label
+                    htmlFor="kid"
+                    className="form-check-label stretched-link">
+                    Kid Clothing
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="checkbox"
+                    name="category"
+                    value="New"
+                    id="newArrival"
+                    checked={selectedCategory.includes("New")}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                  />{" "}
+                  <label
+                    htmlFor="newArrival"
+                    className="form-check-label stretched-link">
+                    New Arrivals
+                  </label>
+                </li>
+                  <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="checkbox"
+                    name="category"
+                    value="Trending"
+                    id="trending"
+                    checked={selectedCategory.includes("Trending")}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                  />{" "}
+                  <label
+                    htmlFor="trending"
+                    className="form-check-label stretched-link">
+                    Trending
+                  </label>
+                </li>
+              </ul>
             </div>
 
             <div className="m-2">
               <h4>Rating:</h4>
-              <input
-                type="radio"
-                name="rating"
-                id=""
-                value="4"
-                onClick={(e) => setRating(e.target.value)}
-              />{" "}
-              4 Star & above <br />
-              <input
-                type="radio"
-                name="rating"
-                id=""
-                value="3"
-                onClick={(e) => setRating(e.target.value)}
-              />{" "}
-              3 star & above <br />
-              <input
-                type="radio"
-                name="rating"
-                id=""
-                value="2"
-                onClick={(e) => setRating(e.target.value)}
-              />{" "}
-              2 star & above <br />
-              <input
-                type="radio"
-                name="rating"
-                id=""
-                value="1"
-                onClick={(e) => setRating(e.target.value)}
-              />{" "}
-              1 star & above <br />
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="rating"
+                    id="4starRadio"
+                    value="4"
+                    onClick={(e) => setRating(e.target.value)}
+                  />
+                  <label
+                    htmlFor="4starRadio"
+                    className="form-check-label stretched-link">
+                    {" "}
+                    4 Star & above
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="rating"
+                    id="3starRadio"
+                    value="3"
+                    onClick={(e) => setRating(e.target.value)}
+                  />
+                  <label
+                    className="form-check-label stretched-link"
+                    htmlFor="3starRadio">
+                    3 star & above
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="rating"
+                    id="2starRadio"
+                    value="2"
+                    onClick={(e) => setRating(e.target.value)}
+                  />
+                  <label
+                    htmlFor="2starRadio"
+                    className="form-check-label stretched-link">
+                    2 star & above
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="rating"
+                    id="1starRadio"
+                    value="1"
+                    onClick={(e) => setRating(e.target.value)}
+                  />
+                  <label
+                    className="form-check-label stretched-link"
+                    htmlFor="1starRadio">
+                    {" "}
+                    1 star & above
+                  </label>
+                </li>
+              </ul>
             </div>
 
             <div className="m-2">
               <h4>Sort by:</h4>
-              <input
-                type="radio"
-                name="sortBy"
-                value="L2H"
-                onClick={(e) => setSortType(e.target.value)}
-              />{" "}
-              Price - Low to high <br />
-              <input
-                type="radio"
-                name="sortBy"
-                value="H2L"
-                onClick={(e) => setSortType(e.target.value)}
-              />{" "}
-              Price - High to low <br />
+              <ul className="list-group">
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="sortBy"
+                    value="L2H"
+                    id="l2h"
+                    onClick={(e) => setSortType(e.target.value)}
+                  />
+                  <label
+                    htmlFor="l2h"
+                    className="form-check-label stretched-link">
+                    Price - Low to high
+                  </label>
+                </li>
+                <li className="list-group-item">
+                  <input
+                    className="form-check-input me-1"
+                    type="radio"
+                    name="sortBy"
+                    id="h2l"
+                    value="H2L"
+                    onClick={(e) => setSortType(e.target.value)}
+                  />
+                  <label
+                    htmlFor="h2l"
+                    className="form-check-label  stretched-link">
+                    Price - High to low{" "}
+                  </label>
+                </li>
+              </ul>
             </div>
           </div>
           <div className="col-lg-9 p-2 border">
-            <div className="row">
+            <div className="row px-2">
               {filteredProducts?.map((product) => {
-                const isInCart = cart.some((item) => item._id === product._id);
                 return (
-                  <div key={product._id} className="col-lg-4">
-                    <div className="card m-2 w-100 text-center">
-                      <Link to={`/product/${product._id}`}>
-                        <img
-                          style={{ position: "relative" }}
-                          height={200}
-                          src={product.productImage}
-                          className="card-img-top"
-                          alt={product.productName}
-                        />
-                        <span
-                          className="btn btn-sm rounded-0 p-1 rounded-1"
-                          style={{
-                            position: "absolute",
-                            top: 5,
-                            left: 7,
-                          }}>
-                          <div className="d-inline-flex align-items-center bg-light px-2 py-1 rounded">
-                            <span className="fw-bold me-1">
-                              {product.productRating}
-                            </span>
-                            <span style={{ color: "green" }}>★</span>
-                          </div>
-                          {/* IMAGE */}
-                        </span>
-                      </Link>
-                      <div className="card-body p-0">
-                        <div
-                          className="p-2"
-                          style={{
-                            justifyContent: "center",
-                            textAlign: "center",
-                          }}>
-                          <p className="card-title">
-                            {"  "}
-                            {product.productCategory} {product.productName}
-                          </p>
-                          <p className="card-text">
-                            {" "}
-                            <b>₹{product.productPrice}</b>{" "}
-                          </p>
-                        </div>
-                        <Link
-                          onClick={() => addToWishlist(product)}
-                          style={{ borderRadius: 0, color: "green" }}
-                          className="w-100 text-decoration-none">
-                          ADD TO WISHLIST
-                        </Link>{" "}
-                        <br />
-                        <button
-                          onClick={() =>
-                            isInCart
-                              ? navigate("/cartlist")
-                              : addToCart(product)
-                          }
-                          style={{ borderRadius: 0 }}
-                          className="w-100 text-decoration-none border-0">
-                          {isInCart ? "GO TO CART" : "ADD TO CART"}
-                        </button>
-                      </div>
-                    </div>
+                  <div
+                    key={product._id}
+                    className="col-12 col-sm-6 col-md-4 col-lg-4">
+                    <ProductCard product={product} />
                   </div>
                 );
               })}
@@ -237,6 +308,7 @@ const ProductListing = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

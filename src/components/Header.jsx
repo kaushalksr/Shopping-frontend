@@ -4,6 +4,8 @@ import heartImage from "../logo/heartImage.png";
 import { CartContext } from "../context/cartContext";
 import { useContext, useEffect, useState } from "react";
 import useFetch from "../useFetch";
+import Loader from "./Loader";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const {
@@ -19,7 +21,7 @@ const Header = () => {
   } = useContext(CartContext);
 
   const { data, loading, error } = useFetch(
-    "https://shopping-xngt.vercel.app/api/products",
+    "https://shopping-backend-98whru07p-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
   );
 
   useEffect(() => {
@@ -39,12 +41,12 @@ const Header = () => {
     setFilteredProducts(filtered);
   }, [searchText]);
 
-  // if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error ocurred!!</p>;
 
   return (
     <div
-      className="sticky-top px-2"
+      className="sticky-top px-2 mb-5"
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
         <div className="container-fluid">
@@ -52,20 +54,22 @@ const Header = () => {
             onClick={() => setSearchText("")}
             className="navbar-brand"
             to="/">
-            <i className="fs-2 fw-bold" style={{ color: "#f0f0f0" }}>
+            <i className="fs-2 fw-bold mx-4" style={{ color: "#f0f0f0" }}>
               MyShopping Site
             </i>
           </Link>
-          <form className="d-flex" role="search">
-            <input
-              style={{ borderColor: "blue" }}
-              onChange={(e) => setSearchText(e.target.value)}
-              className="form-control me-2"
-              type="search"
-              placeholder="Search products"
-              aria-label="Search"
-            />
-          </form>
+          {useLocation().pathname === "/" && (
+            <form className="d-flex" role="search">
+              <input
+                style={{ borderColor: "blue" }}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="form-control me-2"
+                type="search"
+                placeholder="Search products"
+                aria-label="Search"
+              />
+            </form>
+          )}
           <div className="d-flex align-items-center gap-0 my-3">
             <Link to="/userProfile">
               <img
@@ -92,7 +96,9 @@ const Header = () => {
                 </span>
               )}
             </div>
-            <div style={{ position: "relative", display: "inline-block" }}>
+            <div
+              className="me-5"
+              style={{ position: "relative", display: "inline-block" }}>
               <Link className="btn m-0" to="/wishlist">
                 <img
                   style={{ width: 30, height: 30 }}
@@ -112,9 +118,9 @@ const Header = () => {
       </nav>
       {alert.show && (
         <div
-          className={`alert alert-${alert.type} position-fixed top-50 rounded-0 start-50 translate-middle-x mt-3`}
+          className={`alert alert-${alert.type} position-fixed top-50 rounded-0 start-50 translate-middle-x mt-3 px-5 py-3`}
           style={{ zIndex: 9999, minWidth: "300px" }}>
-          {alert.message}
+          <p className="fs-5 fw-semibold"> {alert.message}</p>
         </div>
       )}
     </div>

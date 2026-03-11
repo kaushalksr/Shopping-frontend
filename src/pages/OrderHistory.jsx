@@ -1,61 +1,59 @@
 import { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
-import deleteImg from "../logo/deleteImg.png";
+import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const OrderHistory = () => {
   const { orderData, setOrderData } = useContext(CartContext);
 
-  console.log(orderData);
-
   const today = new Date();
+
+  if (!orderData) return <Loader />;
 
   return (
     <div>
       <Header />
       <div className="container">
         <h3 className="text-center">ORDERS</h3>
-        <div className="row m-0 p-0">
-          {orderData?.map((item, index) => (
-            <div className="row w-100 p-0 m-0 border border-2 border-warning">
-              <div className="col-lg-6 m-0 p-0">
-                <div className="row ">
-                  <div className="col-lg-8">
-                  {item.cart.map((product) =>  <img
-                      className="rounded-0"
-                      style={{ width: 100, height: 100 }}
-                      src={product.productImage}
-                    />) }
-                  </div>
-                  <div className="col-lg-4">
-                    <div className=" h5">
-                      {item.cart.map((product) => (
-                        <p className="p-0 m-0">
-                          {" "}
-                          {product.productName} ({product.productQuantity})
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="row">
-                  <div className="col-lg-5 px-2">
-                    {" "}
-                    <p className="fs-5 h5">₹{item.price}.00</p>{" "}
-                  </div>
-                  <div className="col-lg-7">
-                    <h5>
-                      Ordered on <span className="col-6" >{today.toLocaleDateString()}</span>{" "}
-                    </h5>
-                  </div>
-                </div>
+
+        {orderData?.map((item) => (
+          <div className="row w-100 d-flex p-2 rounded-2 m-0 border border-2 border-primary">
+            <div className="col-lg-4 col-sm-12">
+              {item.cart.map((product) => (
+                <img
+                  className="rounded-0 img-fluid"
+                  style={{ width: 100, height: 100 }}
+                  src={product.productImage}
+                />
+              ))}
+            </div>
+            <div className="col-lg-3 col-sm-12">
+              <div className="fs-5 h5">
+                {item.cart.map((product) => (
+                  <p className="p-0 m-0">
+                    {product.productName} {product.size} ({product.quantity})
+                  </p>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+            <div className="col-lg-2 col-sm-11">
+              {" "}
+              <i className="fs-5 h5">TOTAL PRICE: ₹{item.price}.00</i>{" "}
+            </div>
+            <div className="col-lg-3 col-sm-12">
+              <h5>
+                <i>
+                  Ordered on <span>{today.toLocaleDateString()}</span>
+                </i>{" "}
+                <br />
+                <i>Ordered At: {item.address}</i>
+              </h5>
+            </div>
+          </div>
+        ))}
       </div>
+      <Footer />
     </div>
   );
 };

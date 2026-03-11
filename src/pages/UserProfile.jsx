@@ -1,18 +1,18 @@
 import { useContext } from "react";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
+import Footer from "../components/Footer";
 
 const UserProfile = () => {
   const { address, orderData } = useContext(CartContext);
- 
-  
-  const today = new Date()
+
+  const today = new Date();
 
   return (
     <div>
       <Header />
       <div className="container">
-        <p className="fs-3 my-2 text-center">User Profile</p>
+        <p className="fs-1 my-2 text-center">User Profile</p>
         <hr />
         <div className="row">
           <div className="col-lg-4">
@@ -24,48 +24,68 @@ const UserProfile = () => {
           </div>
           <div className="col-lg-4 ">
             <p className="justify-content-between d-flex">
-              <b>Name : </b> <span>Elina</span>{" "}
+              <b>Name : </b> <i>Elina</i>{" "}
             </p>
             <p className="justify-content-between d-flex">
-              <b>Number : </b> <span>+1123972213</span>{" "}
+              <b>Number : </b> <i>+1123972213</i>{" "}
             </p>
             <p className="justify-content-between d-flex">
               <b>Address : </b>{" "}
               <ol>
                 {address.map((add) => (
-                  <li>{add.fullAddress}</li>
+                  <li>
+                    {" "}
+                    <i>{add.fullAddress}</i>{" "}
+                  </li>
                 ))}
               </ol>
             </p>
           </div>
         </div>
         <div>
-         
           <hr />
           <div className="row">
-            { orderData.length === 0 ? <p className="text-center">No orders</p>  : <p className="fs-3 text-center">Order History</p>}
-            { orderData?.map((item, index) => (
-              <div className="border border-2 p-2 m-1 d-flex justify-content-between col-lg-12 col-sm-12">
-                ({index + 1}) {today.toLocaleDateString()}
-                <p className="vr"></p>
-                <p>
-                  Products :{"   "}
-                  {item.cart
-                    .map(
-                      (item) =>
-                        item.productName + "(" + item.productQuantity + ")",
-                    )
-                    .join(", ")}
-                </p>
-                <p className="vr"></p>
-                <p>Price : ₹ {item.price}</p>
-                <p className="vr"></p>
-                <p>Address : {item.address}</p>
+            {orderData.length === 0 ? (
+              <p className="text-center">No orders</p>
+            ) : (
+              <p className="fs-3 text-center">Order History</p>
+            )}
+            {orderData?.map((item, index) => (
+              <div className="border border-primary border-2 p-2 m-1 d-flex flex-coloumn row">
+                <div className="col-lg-3 col-sm-12">
+                  <p>
+                    <b>({index + 1})</b> {today.toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="col-lg-3  col-sm-12">
+                  <p>
+                    <b>Products :</b> {"   "}
+                    {item.cart
+                      .map(
+                        (item) =>
+                          item.productName + "(" + item.productQuantity + ")",
+                      )
+                      .join(", ")}
+                  </p>
+                </div>
+                <div className="col-lg-2  col-sm-12">
+                  <p>
+                    {" "}
+                    <b>Price :</b> ₹ {item.price}
+                  </p>
+                </div>
+                <div className="col-lg-4  col-sm-12">
+                  <p>
+                    {" "}
+                    <b>Address :</b> {item.address}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
