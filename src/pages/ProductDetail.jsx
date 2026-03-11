@@ -10,7 +10,7 @@ import ProductCard from "./ProductCard";
 import Loader from "../components/Loader";
 const ProductDetail = () => {
   const { data, loading, error } = useFetch(
-    "https://shopping-backend-98whru07p-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
+    "https://shopping-backend-f0w2huqzb-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
   );
   const navigate = useNavigate();
 

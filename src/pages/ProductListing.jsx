@@ -15,7 +15,7 @@ const ProductListing = () => {
   const [sortType, setSortType] = useState("");
 
   const { data, loading, error } = useFetch(
-    "https://shopping-backend-98whru07p-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
+    "https://shopping-backend-f0w2huqzb-kaushal-kishores-projects-52ddfca8.vercel.app/api/products",
   );
 
   const {
@@ -170,7 +170,7 @@ const ProductListing = () => {
                     New Arrivals
                   </label>
                 </li>
-                  <li className="list-group-item">
+                <li className="list-group-item">
                   <input
                     className="form-check-input me-1"
                     type="checkbox"
