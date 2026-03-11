@@ -116,7 +116,7 @@ const CheckoutPage = () => {
     if (deletedAdd && deletedAdd?.fullAddress === selectedAddress) {
       setSelectedAddress("");
     }
-    window.location.reload();
+    
   };
 
   useEffect(() => {
