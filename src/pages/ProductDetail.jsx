@@ -9,6 +9,8 @@ import Footer from "../components/Footer";
 import ProductCard from "./ProductCard";
 import Loader from "../components/Loader";
 const ProductDetail = () => {
+  // BACKEND API = "https://shopping-backend-khaki.vercel.app/api/products"
+  // localhost api = "http://localhost:3000/api/products"
   const { data, loading, error } = useFetch(
     "https://shopping-backend-khaki.vercel.app/api/products",
   );
@@ -16,7 +18,6 @@ const ProductDetail = () => {
 
   const { addToCart, cart, selectedSize, setSelectedSize } =
     useContext(CartContext);
-
 
   const { productId } = useParams();
 
@@ -30,9 +31,8 @@ const ProductDetail = () => {
   const isInCart = cart.some(
     (item) => item.cartId === selectedProduct._id + "_" + selectedSize,
   );
-  
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   if (error) return <p>Error ocurred...</p>;
 
   return (
@@ -78,7 +78,6 @@ const ProductDetail = () => {
 
             <p className="fs-5">
               Size:{" "}
-           
               {["S", "M", "L", "XL"].map((value) => (
                 <button
                   key={value}

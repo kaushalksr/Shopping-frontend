@@ -13,7 +13,8 @@ const Cart = () => {
     totalPrice,
     totalDiscount,
     totalDeliveryCharge,
-    selectedSize
+    wishlist,
+    selectedSize,
   } = useContext(CartContext);
 
   const removeFromCart = (id) => {
@@ -24,15 +25,25 @@ const Cart = () => {
       "danger",
     );
   };
- 
 
   const handleMoveToWishlist = (item) => {
+    if (
+      wishlist.some(
+        (product) =>
+          product.productName.includes(item.productName) &&
+          product.size.includes(item.size),
+      )
+    ) {
+      showAlert(`${item.productName} already present in wishlist`, "warning");
+      setCart((prev) =>
+        prev.filter((product) => product.cartId !== item.cartId),
+      );
+      return;
+    }
     addToWishlist(item);
     setCart((prev) => prev.filter((product) => product.cartId !== item.cartId));
     showAlert(`${item.productName} moved to wishlist`, "warning");
   };
-
- 
 
   return (
     <div>
@@ -49,7 +60,7 @@ const Cart = () => {
           MY CART ( {products.length} )
         </h2>{" "}
       </div>
-      <div className="row m-3">
+      <div className="row m-3 py-3 mb-3">
         <div className={products.length === 0 ? "col-lg-12" : "col-lg-8"}>
           {products.length === 0 ? (
             <div className="justify-content-center text-center align-items-center">
@@ -74,7 +85,7 @@ const Cart = () => {
                   <div className="row m-2">
                     <div key={item._id} className="col-lg-3">
                       <img
-                        style={{height:100 }}
+                        style={{ height: 100 }}
                         className="img-fluid m-1"
                         src={item.productImage}
                         alt="productImage"

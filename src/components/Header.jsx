@@ -20,6 +20,10 @@ const Header = () => {
     showAlert,
   } = useContext(CartContext);
 
+  // BACKEND API = "https://shopping-backend-khaki.vercel.app/api/products"
+
+  // LOCALHOST API = "http://localhost:3000/api/products"
+
   const { data, loading, error } = useFetch(
     "https://shopping-backend-khaki.vercel.app/api/products",
   );
@@ -49,69 +53,75 @@ const Header = () => {
       className="sticky-top px-2 mb-5"
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
-        <div className="container-fluid">
-          <Link
-            onClick={() => setSearchText("")}
-            className="navbar-brand"
-            to="/">
-            <i className="fs-2 fw-bold mx-4" style={{ color: "#f0f0f0" }}>
-              MyShopping Site
-            </i>
-          </Link>
-          {useLocation().pathname === "/" && (
-            <form className="d-flex" role="search">
-              <input
-                style={{ borderColor: "blue" }}
-                onChange={(e) => setSearchText(e.target.value)}
-                className="form-control me-2"
-                type="search"
-                placeholder="Search products"
-                aria-label="Search"
-              />
-            </form>
-          )}
-          <div className="d-flex align-items-center gap-0 my-3">
-            <Link to="/userProfile">
-              <img
-                style={{ height: 30, width: 30, borderRadius: 50 }}
-                src="https://1.bp.blogspot.com/-2x5_PZ-J6WI/Wv5jfleTBcI/AAAAAAAAABk/X6_LmKkxxk0sy7qJezEwUDtd0bldhizKACLcBGAs/s640/36738d1c8cabd2f7f172e1eeaceba3e1.jpg"
-                alt=""
-              />
+        <div className="container-fluid top-header row">
+          <div className="col-lg-4 d-flex justify-content-center">
+            <Link
+              onClick={() => setSearchText("")}
+              className="navbar-brand"
+              to="/">
+              <i className="fs-2 fw-bold mx-4" style={{ color: "#f0f0f0" }}>
+                MyShopping Site
+              </i>
             </Link>
-            <div
-              className="mx-5"
-              style={{ position: "relative", display: "inline-block" }}>
-              <Link className="btn m-0" to="/cartlist">
-                {" "}
+          </div>
+          <div className="col-lg-4 d-flex justify-content-center">
+            {useLocation().pathname === "/" && (
+              <form className="d-flex" role="search">
+                <input
+                  style={{ borderColor: "blue" }}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search products"
+                  aria-label="Search"
+                />
+              </form>
+            )}
+          </div>
+          <div className="col-lg-4 col-sm-12 d-flex justify-content-center">
+            <div className="gap-0 my-1">
+              <Link to="/userProfile">
                 <img
-                  style={{ width: 30, height: 30 }}
-                  className="my-0 img-fluid"
-                  src={cartImage}
-                  alt="Cart"
+                  style={{ height: 30, width: 30, borderRadius: 50 }}
+                  src="https://1.bp.blogspot.com/-2x5_PZ-J6WI/Wv5jfleTBcI/AAAAAAAAABk/X6_LmKkxxk0sy7qJezEwUDtd0bldhizKACLcBGAs/s640/36738d1c8cabd2f7f172e1eeaceba3e1.jpg"
+                  alt=""
                 />
               </Link>
-              {products.length > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {products.length}
-                </span>
-              )}
-            </div>
-            <div
-              className="me-5"
-              style={{ position: "relative", display: "inline-block" }}>
-              <Link className="btn m-0" to="/wishlist">
-                <img
-                  style={{ width: 30, height: 30 }}
-                  className="my-0"
-                  src={heartImage}
-                  alt="Wishlist"
-                />
-              </Link>
-              {wishlist.length > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {wishlist.length}
-                </span>
-              )}
+              <div
+                className="mx-5"
+                style={{ position: "relative", display: "inline-block" }}>
+                <Link className="btn m-0" to="/cartlist">
+                  {" "}
+                  <img
+                    style={{ width: 30, height: 30 }}
+                    className="my-0 img-fluid"
+                    src={cartImage}
+                    alt="Cart"
+                  />
+                </Link>
+                {products.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {products.length}
+                  </span>
+                )}
+              </div>
+              <div
+                className="me-5"
+                style={{ position: "relative", display: "inline-block" }}>
+                <Link className="btn m-0" to="/wishlist">
+                  <img
+                    style={{ width: 30, height: 30 }}
+                    className="my-0"
+                    src={heartImage}
+                    alt="Wishlist"
+                  />
+                </Link>
+                {wishlist.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {wishlist.length}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

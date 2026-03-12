@@ -14,6 +14,10 @@ const ProductListing = () => {
   const [rating, setRating] = useState(1);
   const [sortType, setSortType] = useState("");
 
+  // Backend api = "https://shopping-backend-khaki.vercel.app/api/products"
+
+  // localhost api = "http://localhost:3000/api/products"
+
   const { data, loading, error } = useFetch(
     "https://shopping-backend-khaki.vercel.app/api/products",
   );

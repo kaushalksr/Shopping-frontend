@@ -41,7 +41,7 @@ const WishlistPage = () => {
     showAlert("Item Moved to cart", "success");
   };
 
-  console.log("wishlist = ", wishlist);
+  
 
   const deleteFromWishList = (wId) => {
     setWishlist((prevValue) =>

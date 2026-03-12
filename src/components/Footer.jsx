@@ -10,15 +10,15 @@ const Footer = () => {
         marginTop: 50,
       }}>
       <p
-        className="fs-4"
+        className="fs-5"
         style={{
           backgroundColor: "#363640",
-          padding: 10,
+          padding: 0,
           margin: 0,
           color: "#fff",
           fontSize:15
         }}>
-        &copy; My shopping site . All Rights Reserved.
+        &copy; MyShopping site.All Rights Reserved.
       </p>
     </div>
   );

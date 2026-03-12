@@ -66,8 +66,6 @@ const CheckoutPage = () => {
     }
   };
 
-
-
   // UPDATE ADDRESS
 
   const editAddress = (addId) => {
@@ -116,8 +114,18 @@ const CheckoutPage = () => {
     if (deletedAdd && deletedAdd?.fullAddress === selectedAddress) {
       setSelectedAddress("");
     }
-    
+    setSelectedAddress("");
   };
+
+  useEffect(() => {
+    const addressExsits = address.some(
+      (add) => add.fullAddress === selectedAddress,
+    );
+
+    if (!addressExsits) {
+      setSelectedAddress("");
+    }
+  }, [address]);
 
   useEffect(() => {
     if (Array.isArray(address)) {
@@ -207,7 +215,7 @@ const CheckoutPage = () => {
               </p>
             </div>
           </div>
-          <div className="col-lg-12 col-sm-12 mx-auto">
+          <div className="col-lg-12 col-sm-12 mx-3">
             <p className="fs-3 fw-bold">ORDER DETAILS</p>
             <div className="row">
               {products.map((item) => (
