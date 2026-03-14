@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Header from "../components/Header";
 import { CartContext } from "../context/cartContext";
 import useFetch from "../useFetch";
@@ -8,8 +8,11 @@ const WishlistPage = () => {
   const { wishlist, addToCart, setWishlist, showAlert, cart, setCart } =
     useContext(CartContext);
 
+  const [movingId, setMovingId] = useState(null);
+  const [removeId, setRemoveId] = useState(null);
+
   const handleMoveTocart = (item) => {
-    // addToCart(item);
+    setMovingId(item.wishListId);
 
     if (
       cart.some(
@@ -32,22 +35,27 @@ const WishlistPage = () => {
       cartId: item._id + "_" + item.size,
     };
 
-    setCart((prevValue) => [...prevValue, cartItem]);
+    setTimeout(() => {
+      setMovingId(false);
+      setCart((prevValue) => [...prevValue, cartItem]);
 
-    setWishlist((prev) =>
-      prev.filter((prod) => prod.wishListId !== item.wishListId),
-    );
+      setWishlist((prev) =>
+        prev.filter((prod) => prod.wishListId !== item.wishListId),
+      );
 
-    showAlert("Item Moved to cart", "success");
+      showAlert("Item Moved to cart", "success");
+    }, 2000);
   };
 
-  
-
   const deleteFromWishList = (wId) => {
-    setWishlist((prevValue) =>
-      prevValue.filter((item) => item.wishListId !== wId),
-    );
-    showAlert("Item Removed from Wishlist", "danger");
+    setRemoveId(wId);
+    setTimeout(() => {
+      setWishlist((prevValue) =>
+        prevValue.filter((item) => item.wishListId !== wId),
+      );
+      showAlert("Item Removed from Wishlist", "danger");
+      setRemoveId(false);
+    }, 2000);
   };
 
   return (
@@ -92,31 +100,43 @@ const WishlistPage = () => {
                     alt={item.productName}
                   />
                 </div>
-                <div className="col-lg-6">
-                  <p className="fs-5 fw-semibold">
-                    {item.productCategory} {item.productName} {item.size}
+                <div className="col-lg-9">
+                  <p className="fs-5 fw-semibold m-0 p-0">
+                    {item.productCategory} {item.productName} 
                   </p>
+                  <p className="fs-5 m-0 p-0">Size: {item.size}</p>
                   <p className="fs-5 fw-semibold">₹{item.productPrice}</p>
-                </div>
-                <div className="col-lg-3">
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <Link
-                        onClick={() => handleMoveTocart(item)}
-                        className="btn btn-outline-primary btn-sm mb-3">
-                        <b> MOVE TO CART</b>
-                      </Link>
-                    </div>
-                    <div className="col-sm-6">
-                      <button
-                        className="btn btn-outline-danger btn-sm"
-                        onClick={() => deleteFromWishList(item.wishListId)}>
-                        Remove
-                      </button>
-                    </div>
-                  </div>
 
-                  <br />
+                  <button disabled={movingId === item.wishListId}
+                    onClick={() => handleMoveTocart(item)}
+                    className="btn btn-outline-secondary btn-sm m-1 rounded-5 border-5">
+                    <b>
+                      {" "}
+                      {movingId === item.wishListId ? (
+                        <>
+                          Moving...{" "}
+                          <span className="spinner-border spinner-border-sm me-2"></span>
+                        </>
+                      ) : (
+                        "MOVE TO CART"
+                      )}
+                    </b>
+                  </button>
+
+                  <button disabled={removeId === item.wishListId}
+                    className="btn btn-outline-danger btn-sm m-1 rounded-5 border-5"
+                    onClick={() => deleteFromWishList(item.wishListId)}>
+                    <b>
+                      {removeId === item.wishListId ? (
+                        <>
+                          Removing...{" "}
+                          <span className="spinner-border spinner-border-sm me-2"></span>{" "}
+                        </>
+                      ) : (
+                        "Remove"
+                      )}
+                    </b>
+                  </button>
                 </div>
               </div>
             ))

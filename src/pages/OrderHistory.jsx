@@ -18,12 +18,12 @@ const OrderHistory = () => {
         <h3 className="text-center">ORDERS</h3>
 
         {orderData?.map((item) => (
-          <div className="row w-100 d-flex p-2 rounded-2 m-0 border border-2 border-primary">
+          <div className="row w-100 d-flex p-2 rounded-2 m-0 border border-2 border-primary text-center justify-content-center align-items-center">
             <div className="col-lg-4 col-sm-12">
               {item.cart.map((product) => (
                 <img
-                  className="rounded-0 img-fluid"
-                  style={{ width: 100, height: 100 }}
+                  className=""
+                  style={{ width: 80, height: 80,borderRadius:"50%" }}
                   src={product.productImage}
                 />
               ))}

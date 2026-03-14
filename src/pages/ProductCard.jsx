@@ -16,8 +16,9 @@ const ProductCard = ({ product }) => {
         <img
           style={{ position: "relative", borderRadius: 0 }}
           src={product.productImage}
-          height={350}
-          className="card-img-top img-fluid"
+          height={300}
+          width={100}
+          className="card-img-top"
           alt={product.productName}
         />
         <span
@@ -42,14 +43,17 @@ const ProductCard = ({ product }) => {
           }}>
           <p className="card-title p-0 m-0">
             {"  "}
-            {product.productCategory} {product.productName} {product.productSize}
+            {product.productCategory} {product.productName}{" "}
+            {product.productSize}
           </p>
           <p className="card-text p-0 m-0">
             {" "}
             <p className="fs-5">
-             <p className="fw-bold m-0 p-0"> ₹{product.productPrice}</p>{" "}
+              <p className="fw-bold m-0 p-0"> ₹{product.productPrice}</p>{" "}
               <span className="p-0 m-0" style={{ color: "green" }}>
-               <b><i> {product.productDiscount}% off </i></b> 
+                <b>
+                  <i> {product.productDiscount}% off </i>
+                </b>
               </span>{" "}
             </p>{" "}
           </p>

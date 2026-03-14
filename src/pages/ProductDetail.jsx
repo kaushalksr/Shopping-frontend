@@ -1,7 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import useFetch from "../useFetch";
-import ecom from "../logo/ecom.png";
+import exchange from "../logo/exchange.png";
+import replace from "../logo/replace.png";
+import refund from "../logo/refund.png";
 import { CartContext } from "../context/cartContext";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
@@ -16,13 +18,13 @@ const ProductDetail = () => {
   );
   const navigate = useNavigate();
 
-  const { addToCart, cart, selectedSize, setSelectedSize } =
+  const { addToCart, cart, selectedSize, setSelectedSize, dataLoading } =
     useContext(CartContext);
 
   const { productId } = useParams();
 
   const selectedProduct = data?.find((item) => item._id === productId);
-  if (!selectedProduct) return <p>Loading...</p>;
+  if (!selectedProduct) return <Loader />;
 
   const sameCategoryProduct = data?.filter(
     (cat) => cat.productCategory === selectedProduct?.productCategory,
@@ -33,12 +35,12 @@ const ProductDetail = () => {
   );
 
   if (loading) return <Loader />;
-  if (error) return <p>Error ocurred...</p>;
+  if (error) return <p className="text-center">Error ocurred...</p>;
 
   return (
     <>
       <Header />
-      <div className="container">
+      <div className="container mb-5">
         <Link
           className="btn btn-outline-secondary py-2 mb-4 px-5 "
           to="/api/products">
@@ -53,13 +55,13 @@ const ProductDetail = () => {
         <div className="row mt-2 p-2">
           <div className="col-lg-3">
             <ProductCard product={selectedProduct} />
-            <button
+            <button disabled={dataLoading}
               onClick={() =>
                 isInCart ? navigate("/cartlist") : addToCart(selectedProduct)
               }
               style={{ borderRadius: 50 }}
-              className={` fw-semibold w-100 btn ${isInCart ? `btn-outline-warning` : `btn-outline-success`}  btn-sm text-decoration-none`}>
-              {isInCart ? "GO TO CART" : "ADD TO CART"}
+              className={`fw-semibold w-100 btn ${isInCart && !dataLoading ? `btn-outline-warning` : `btn-outline-success`}  btn-sm text-decoration-none`}>
+              {isInCart && !dataLoading ? "GO TO CART" : "ADD TO CART"} {dataLoading && <span className="spinner-border spinner-border-sm me-2"></span>}
             </button>
           </div>
 
@@ -88,8 +90,19 @@ const ProductDetail = () => {
               ))}
             </p>
             <hr />
-            <div className="justify-content-center">
-              <img style={{ width: "100%" }} src={ecom} alt="ecomImages" />
+            <div className="d-flex justify-content-left gap-5">
+              <div>
+                <img src={replace} height={60} width={60} alt="replace" />
+                <p>Replacement</p>
+              </div>
+              <div>
+                <img src={refund} height={60} width={60} alt="refund" />
+                <p>Refund</p>
+              </div>
+              <div>
+                <img src={exchange} height={60} width={60} alt="exchange" />
+                <p>Exchange</p>
+              </div>
             </div>
             <hr />
             <div>

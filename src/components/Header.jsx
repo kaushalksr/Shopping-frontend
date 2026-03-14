@@ -54,13 +54,13 @@ const Header = () => {
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
         <div className="container-fluid top-header row">
-          <div className="col-lg-4 d-flex justify-content-center">
+          <div className="col-lg-4 d-flex justify-content-center my-2">
             <Link
               onClick={() => setSearchText("")}
               className="navbar-brand"
               to="/">
-              <i className="fs-2 fw-bold mx-4" style={{ color: "#f0f0f0" }}>
-                MyShopping Site
+              <i className="fs-2 fw-bold mx-4 mb" style={{ color: "#f0f0f0" }}>
+                Flixcart
               </i>
             </Link>
           </div>
@@ -78,8 +78,8 @@ const Header = () => {
               </form>
             )}
           </div>
-          <div className="col-lg-4 col-sm-12 d-flex justify-content-center">
-            <div className="gap-0 my-1">
+          <div className="col-lg-4 col-sm-12">
+            <div className="gap-0 d-flex align-items-center justify-content-center">
               <Link to="/userProfile">
                 <img
                   style={{ height: 30, width: 30, borderRadius: 50 }}

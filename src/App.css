@@ -79,9 +79,9 @@
   background-color: red;
 }
 
-body {
+/* body {
   margin-bottom: 70px;
-}
+} */
 
 .loader-container {
   display: flex;
@@ -116,7 +116,7 @@ body {
   }
 }
 
-@media (max-width:576px) {
+@media (max-width: 576px) {
   .homepage-image {
     height: 10;
     width: 10;

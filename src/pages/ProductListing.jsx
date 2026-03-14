@@ -10,7 +10,7 @@ import Loader from "../components/Loader";
 
 const ProductListing = () => {
   const [maxPrice, setMaxPrice] = useState(5000);
-  const [selectedCategory, setSelectedCategory] = useState([]);
+
   const [rating, setRating] = useState(1);
   const [sortType, setSortType] = useState("");
 
@@ -22,15 +22,7 @@ const ProductListing = () => {
     "https://shopping-backend-khaki.vercel.app/api/products",
   );
 
-  const {
-    cart,
-    addToCart,
-    addToWishlist,
-    wishlist,
-    removeFromWishlist,
-    loader,
-    setLoader,
-  } = useContext(CartContext);
+  const { selectedCategory, setSelectedCategory } = useContext(CartContext);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory((prev) =>
@@ -77,7 +69,7 @@ const ProductListing = () => {
             height={30}
             width={30}
             src="https://www.svgrepo.com/show/18507/back-button.svg"
-            alt="BACK button"
+            alt="back_button"
           />
         </Link>
         <div className="row">
@@ -97,13 +89,14 @@ const ProductListing = () => {
                 onChange={(e) => setMaxPrice(e.target.value)}
                 className="form-range"
                 type="range"
-                name=""
                 id="priceRange"
                 min="0"
                 max="5000"
                 step="500"
               />
-              <p id="priceRange2"></p>
+              <p className="fs-5" style={{ color: "blue" }}>
+                Products upto ₹{maxPrice}
+              </p>
             </div>
 
             <div className="m-2">
@@ -298,12 +291,18 @@ const ProductListing = () => {
             </div>
           </div>
           <div className="col-lg-9 p-2 border">
-            <div className="row px-2">
+            <div className="text-center">
+              {" "}
+              <span className="fs-4">
+                {filteredProducts.length} products found
+              </span>
+            </div>
+
+            <hr className="w-100 p-0" />
+            <div className="row mx-auto">
               {filteredProducts?.map((product) => {
                 return (
-                  <div
-                    key={product._id}
-                    className="col-12 col-sm-6 col-md-4 col-lg-4">
+                  <div key={product._id} className="col-sm-6 col-md-4 col-lg-4">
                     <ProductCard product={product} />
                   </div>
                 );

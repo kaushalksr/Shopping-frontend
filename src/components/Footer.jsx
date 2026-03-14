@@ -18,7 +18,7 @@ const Footer = () => {
           color: "#fff",
           fontSize:15
         }}>
-        &copy; MyShopping site.All Rights Reserved.
+        &copy; Flixcart.All Rights Reserved.
       </p>
     </div>
   );

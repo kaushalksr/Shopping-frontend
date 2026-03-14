@@ -8,6 +8,8 @@ const CartProvider = ({ children }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [dataLoading, setDataLoading] = useState(false);
 
   const [alert, setAlert] = useState({
     show: false,
@@ -79,6 +81,7 @@ const CartProvider = ({ children }) => {
       showAlert(`Please select size of ${product.productName}`, "danger");
       return;
     }
+    setDataLoading(true);
     if (!product.size) {
       const cartItem = {
         ...product,
@@ -97,10 +100,11 @@ const CartProvider = ({ children }) => {
       setCart((prevValue) => [...prevValue, cartItem]);
     }
 
-    showAlert(`${product.productName} added to cart`, "success");
+    setTimeout(() => {
+      setDataLoading(false);
+      showAlert(`${product.productName} added to cart`, "success");
+    }, 1000);
   };
-
- 
 
   const addToWishlist = (product) => {
     !product.size ? (product.size = "M") : product.size;
@@ -172,6 +176,10 @@ const CartProvider = ({ children }) => {
         removeFromWishlist,
         selectedSize,
         setSelectedSize,
+        selectedCategory,
+        setSelectedCategory,
+        dataLoading,
+        setDataLoading,
       }}>
       {children}
     </CartContext.Provider>
