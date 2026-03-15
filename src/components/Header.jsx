@@ -54,7 +54,7 @@ const Header = () => {
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
         <div className="container-fluid top-header d-flex align-items-center text-center justify-content-center row">
-          <div className="col-lg-4">
+          <div className="col-lg-4 mt-1">
             <Link
               onClick={() => setSearchText("")}
               className="navbar-brand"
@@ -64,7 +64,7 @@ const Header = () => {
               </i>
             </Link>
           </div>
-          <div className="col-lg-4 col-md-7 col-sm-12">
+          <div className="col-lg-4 col-md-7 col-sm-12 mt-1">
             {useLocation().pathname === "/" && (
               <form className="" role="search">
                 <input
@@ -78,49 +78,51 @@ const Header = () => {
               </form>
             )}
           </div>
-          <div className="col-lg-4 col-sm-12 mt-3">
-            <Link to="/userProfile">
-              <img
-                style={{ height: 30, width: 30, borderRadius: 50 }}
-                src="https://1.bp.blogspot.com/-2x5_PZ-J6WI/Wv5jfleTBcI/AAAAAAAAABk/X6_LmKkxxk0sy7qJezEwUDtd0bldhizKACLcBGAs/s640/36738d1c8cabd2f7f172e1eeaceba3e1.jpg"
-                alt=""
-              />
-            </Link>
-            <div
-              className="mx-5"
-              style={{ position: "relative", display: "inline-block" }}>
-              <Link className="btn m-0" to="/cartlist">
-                {" "}
+          <div className="col-lg-4 col-sm-12 mt-1">
+        
+              <Link to="/userProfile">
                 <img
-                  style={{ width: 30, height: 30 }}
-                  className="my-0 img-fluid"
-                  src={cartImage}
-                  alt="Cart"
+                  style={{ height: 30, width: 30, borderRadius: 50 }}
+                  src="https://1.bp.blogspot.com/-2x5_PZ-J6WI/Wv5jfleTBcI/AAAAAAAAABk/X6_LmKkxxk0sy7qJezEwUDtd0bldhizKACLcBGAs/s640/36738d1c8cabd2f7f172e1eeaceba3e1.jpg"
+                  alt=""
                 />
               </Link>
-              {products.length > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {products.length}
-                </span>
-              )}
-            </div>
-            <div
-              className=""
-              style={{ position: "relative", display: "inline-block" }}>
-              <Link className="btn m-0" to="/wishlist">
-                <img
-                  style={{ width: 30, height: 30 }}
-                  className="my-0"
-                  src={heartImage}
-                  alt="Wishlist"
-                />
-              </Link>
-              {wishlist.length > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {wishlist.length}
-                </span>
-              )}
-            </div>
+              <div
+                className="mx-5"
+                style={{ position: "relative", display: "inline-block" }}>
+                <Link className="btn m-0" to="/cartlist">
+                  {" "}
+                  <img
+                    style={{ width: 30, height: 30 }}
+                    className="my-0 img-fluid"
+                    src={cartImage}
+                    alt="Cart"
+                  />
+                </Link>
+                {products.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {products.length}
+                  </span>
+                )}
+              </div>
+              <div
+                className=""
+                style={{ position: "relative", display: "inline-block" }}>
+                <Link className="btn m-0" to="/wishlist">
+                  <img
+                    style={{ width: 30, height: 30 }}
+                    className="my-0"
+                    src={heartImage}
+                    alt="Wishlist"
+                  />
+                </Link>
+                {wishlist.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {wishlist.length}
+                  </span>
+                )}
+              </div>
+          
           </div>
         </div>
       </nav>
