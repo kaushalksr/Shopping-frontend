@@ -55,17 +55,21 @@ const ProductDetail = () => {
         <div className="row mt-2 p-2">
           <div className="col-lg-3">
             <ProductCard product={selectedProduct} />
-            <button disabled={dataLoading}
+            <button
+              disabled={dataLoading}
               onClick={() =>
                 isInCart ? navigate("/cartlist") : addToCart(selectedProduct)
               }
               style={{ borderRadius: 50 }}
               className={`fw-semibold w-100 btn ${isInCart && !dataLoading ? `btn-outline-warning` : `btn-outline-success`}  btn-sm text-decoration-none`}>
-              {isInCart && !dataLoading ? "GO TO CART" : "ADD TO CART"} {dataLoading && <span className="spinner-border spinner-border-sm me-2"></span>}
+              {isInCart && !dataLoading ? "GO TO CART" : "ADD TO CART"}{" "}
+              {dataLoading && (
+                <span className="spinner-border spinner-border-sm me-2"></span>
+              )}
             </button>
           </div>
 
-          <div className="col-lg-8">
+          <div className="col-lg-8 mt-1">
             <p className="fs-5 fw-semibold m-0">
               {selectedProduct?.productCategory} {selectedProduct?.productName}
             </p>

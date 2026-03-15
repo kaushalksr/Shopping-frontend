@@ -136,7 +136,7 @@ const Cart = () => {
                       {/* //------------- */}
                     </div>
                     <div
-                      className="col-lg-6"
+                      className="col-lg-6 text-center"
                       style={{ textAlign: "left", justifyContent: "left" }}>
                       <p className="fs-5 m-0 p-0">
                         {item.productCategory} {item.productName}
@@ -158,7 +158,7 @@ const Cart = () => {
                         <button
                           disabled={loadingId === item.cartId}
                           onClick={() => removeFromCart(item.cartId)}
-                          className="mb-3 text-decoration-none btn btn-outline-danger rounded-5 border-5">
+                          className="mb-3 text-decoration-none btn btn-sm btn-outline-danger rounded-5 border-5">
                           <b>
                             {loadingId === item.cartId ? (
                               <>
@@ -174,7 +174,7 @@ const Cart = () => {
                         <button
                           disabled={moveToWishListId === item.cartId}
                           onClick={() => handleMoveToWishlist(item)}
-                          className="rounded-0 text-decoration-none btn btn-outline-secondary rounded-5 border-5">
+                          className=" btn-sm btn btn-outline-secondary rounded-5 border-5">
                           <b>
                             {moveToWishListId === item.cartId ? (
                               <>
@@ -233,7 +233,7 @@ const Cart = () => {
                 You will save ₹{totalDiscount} on this order.
               </i>
             </p>
-            <Link
+            <button disabled={dataLoading}
               style={{
                 backgroundColor: "#fb641b",
                 border: "none",
@@ -249,7 +249,7 @@ const Cart = () => {
               ) : (
                 "PLACE ORDER"
               )}
-            </Link>
+            </button>
           </div>
         )}
       </div>

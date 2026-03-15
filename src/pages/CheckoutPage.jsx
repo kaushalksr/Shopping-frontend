@@ -13,15 +13,14 @@ const CheckoutPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
-    pincode: "",
-    locality: "",
     fullAddress: "",
+    locality: "",
     city: "",
     state: "",
+    pincode: "",
     addressType: "",
   });
   const [editId, setEditId] = useState(null);
-  const [checkOutId, setCheckOutId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -49,7 +48,6 @@ const CheckoutPage = () => {
       const updatedAddress = address.map((item) =>
         item.id === editId ? { ...item, ...formData } : item,
       );
-
 
       setAddress(updatedAddress);
       setEditId(null);
@@ -87,11 +85,11 @@ const CheckoutPage = () => {
     setFormData({
       name: addressToUpdate.name,
       mobile: addressToUpdate.mobile,
-      pincode: addressToUpdate.pincode,
-      locality: addressToUpdate.locality,
       fullAddress: addressToUpdate.fullAddress,
+      locality: addressToUpdate.locality,
       city: addressToUpdate.city,
       state: addressToUpdate.state,
+      pincode: addressToUpdate.pincode,
       addressType: addressToUpdate.addressType,
     });
     setEditId(addId);
@@ -108,9 +106,25 @@ const CheckoutPage = () => {
       return;
     }
 
+    const orderAddress = address.find((add) => add.id === selectedAddress);
+    const completeAddress =
+      orderAddress.name +
+      ", " +
+      orderAddress.mobile +
+      ", " +
+      orderAddress.fullAddress +
+      ", " +
+      orderAddress.locality +
+      ", " +
+      orderAddress.city +
+      ", " +
+      orderAddress.state +
+      ", " +
+      orderAddress.pincode;
+
     const newOrder = {
       id: Date.now(),
-      address: selectedAddress,
+      address: completeAddress,
       cart: products,
       price: totalPrice + totalDeliveryCharge - totalDiscount,
     };
@@ -350,16 +364,25 @@ const CheckoutPage = () => {
                     <label className="form-check-label">Office</label>
                   </div>
                 </div>
-                <button type="submit" className="col-md-3 col-sm-3 btn btn-primary m-1">
+                <button
+                  type="submit"
+                  className="col-md-3 col-sm-3 btn btn-primary m-1">
                   {editId ? "Update Address" : "Save Address"}
                 </button>
-                <button className="col-md-3 col-sm-3 btn btn-danger m-1" type="button" onClick={() => setShowAddressForm(false) } >Close</button>
+                <button
+                  className="col-md-3 col-sm-3 btn btn-danger m-1"
+                  type="button"
+                  onClick={() => setShowAddressForm(false)}>
+                  Close
+                </button>
               </form>
             )}
             <div className="row m-2">
-              { address.length > 0 && !selectedAddress && selectedAddress === "" && (
-                <p style={{ color: "red" }}>Please select Address</p>
-              )}
+              {address.length > 0 &&
+                !selectedAddress &&
+                selectedAddress === "" && (
+                  <p style={{ color: "red" }}>Please select Address</p>
+                )}
               {address &&
                 address.map((add) => (
                   <div
@@ -376,8 +399,8 @@ const CheckoutPage = () => {
                       <span className="btn btn-light btn-sm p-1 border border-1">
                         {add.addressType}
                       </span>{" "}
-                      {add.name},{" "}{add.locality},{" "}{add.fullAddress},{" "}{add.city},{" "}
-                      {add.state},{" "}{add.pincode}
+                      {add.name}, {add.locality}, {add.fullAddress}, {add.city},{" "}
+                      {add.state}, {add.pincode}
                     </div>
                     <div>
                       <button
