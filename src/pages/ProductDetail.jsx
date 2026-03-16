@@ -42,15 +42,10 @@ const ProductDetail = () => {
       <Header />
       <div className="container mb-5">
         <Link
-          className="btn btn-outline-secondary py-2 mb-4 px-5 "
+          className="btn btn-outline-secondary btn-sm mb-2"
           to="/api/products">
           {" "}
-          <img
-            height={30}
-            width={30}
-            src="https://www.svgrepo.com/show/18507/back-button.svg"
-            alt="BACK button"
-          />{" "}
+        Go back
         </Link>
         <div className="row mt-2 p-2">
           <div className="col-lg-3">

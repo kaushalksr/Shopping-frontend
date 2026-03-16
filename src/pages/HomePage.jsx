@@ -20,7 +20,7 @@ const HomePage = () => {
       <Header />
       <div className="container">
         {filteredProducts?.length > 0 ? (
-          <div className="row mt-2">
+          <div className="row">
             {filteredProducts?.map((product) => {
               const isInCart = cart.some((item) => item._id === product._id);
               return (
@@ -31,8 +31,8 @@ const HomePage = () => {
             })}
           </div>
         ) : filteredProducts?.length === 0 && searchText === "" ? (
-          <div className="container mt-2">
-            <div className="row my-3" style={{ justifyContent: "center" }}>
+          <div className="container mb-5">
+            <div className="row mb-5" style={{ justifyContent: "center" }}>
               <Link
                 onClick={() => setSelectedCategory(["Men"])}
                 to="/api/products"
@@ -149,12 +149,12 @@ const HomePage = () => {
               </Link>
             </div>
 
-            <div className="my-5 row" style={{ justifyContent: "center" }}>
-              <div className="col-lg-12 col-sm-12">
-                <img
+            <div className=" row" style={{ justifyContent: "center" }}>
+              <div className="col-lg-11 col-sm-12">
+                <img className="img-fluid"
                   style={{ width: "100%" }}
                   src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt=""
+                  alt="image"
                 />
               </div>
             </div>

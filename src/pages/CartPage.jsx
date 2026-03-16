@@ -73,7 +73,7 @@ const Cart = () => {
   return (
     <div>
       <Header />
-      <div className="m-1 text-center my-1">
+      <div className="text-center">
         {" "}
         <h2
           style={{
@@ -85,7 +85,7 @@ const Cart = () => {
           MY CART ( {products.length} )
         </h2>{" "}
       </div>
-      <div className="row m-3 py-3 mb-5">
+      <div className="row m-3 mb-5">
         <div className={products.length === 0 ? "col-lg-12" : "col-lg-8"}>
           {products.length === 0 ? (
             <div className="justify-content-center text-center align-items-center">

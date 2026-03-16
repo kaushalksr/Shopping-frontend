@@ -64,13 +64,8 @@ const ProductListing = () => {
     <div>
       <Header />
       <div className="container mb-5">
-        <Link className="btn btn-outline-secondary py-2 mb-4 px-5 " to="/">
-          <img
-            height={30}
-            width={30}
-            src="https://www.svgrepo.com/show/18507/back-button.svg"
-            alt="back_button"
-          />
+        <Link className="btn btn-outline-secondary btn-sm mb-2" to="/">
+          Go back
         </Link>
         <div className="row">
           <div className="col-lg-3 p-2 border fixed-box">

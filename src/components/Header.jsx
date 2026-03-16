@@ -53,7 +53,7 @@ const Header = () => {
       className="sticky-top mb-5 py-1"
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
-        <div className="container-fluid top-header d-flex align-items-center text-center justify-content-center row">
+        <div className="container-fluid top-header d-flex align-items-center text-center justify-content-center row mb-3">
           <div className="col-lg-4 mt-1">
             <Link
               onClick={() => setSearchText("")}
