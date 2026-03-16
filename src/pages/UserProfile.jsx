@@ -11,7 +11,7 @@ const UserProfile = () => {
   return (
     <div>
       <Header />
-      <div className="container">
+      <div className="container mb-5">
         <p className="fs-1 my-2 text-center">User Profile</p>
         <hr />
         <div className="row">
