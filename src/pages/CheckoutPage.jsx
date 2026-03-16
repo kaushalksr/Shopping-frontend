@@ -386,7 +386,7 @@ const CheckoutPage = () => {
               {address &&
                 address.map((add) => (
                   <div
-                    className={`col-lg-12 d-flex justify-content-between border p-3 ${selectedAddress === add.id ? "border-primary border-4" : "border"}`}
+                    className={`col-lg-12 d-flex align-items-center justify-content-between border p-3 ${selectedAddress === add.id ? "border-primary border-4" : "border"}`}
                     onClick={() => setSelectedAddress(add.id)}
                     style={{
                       padding: 10,
@@ -402,13 +402,13 @@ const CheckoutPage = () => {
                       {add.name}, {add.locality}, {add.fullAddress}, {add.city},{" "}
                       {add.state}, {add.pincode}
                     </div>
-                    <div>
+                    <div className="">
                       <button
                         onClick={() => editAddress(add.id)}
                         className="btn-warning btn btn-sm m-2">
                         {" "}
                         <img
-                          style={{ height: 15, width: 15, padding: 0 }}
+                          style={{ height: "15px", width: "15px", padding: 0 }}
                           src="https://cdn-icons-png.freepik.com/512/8747/8747675.png"
                           alt="EditButton"
                         />{" "}
