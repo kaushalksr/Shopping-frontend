@@ -53,8 +53,8 @@ const Header = () => {
       className="sticky-top mb-5 py-1"
       style={{ backgroundColor: "#2874f0", color: "#f0f0f0" }}>
       <nav className="navbar text-dark">
-        <div className="container-fluid top-header d-flex align-items-center text-center justify-content-center row mb-3">
-          <div className="col-lg-4 mt-1">
+        <div className="container-fluid p-0 m-0 top-header d-flex align-items-center text-center justify-content-center row mb-3">
+          <div className="col-lg-4 my-1 mb-3">
             <Link
               onClick={() => setSearchText("")}
               className="navbar-brand"
@@ -64,13 +64,13 @@ const Header = () => {
               </i>
             </Link>
           </div>
-          <div className="col-lg-4 col-md-7 col-sm-12 mt-1">
+          <div className="col-lg-4 col-md-7 col-sm-12 my-1 mb-3 d-flex justify-content-center">
             {useLocation().pathname === "/" && (
-              <form className="" role="search">
+              <form className="mx-auto w-100" role="search">
                 <input
                   style={{ borderColor: "blue" }}
                   onChange={(e) => setSearchText(e.target.value)}
-                  className="form-control form-control-sm"
+                  className="form-control form-control-sm text-center"
                   type="search"
                   placeholder="Search products"
                   aria-label="Search"
@@ -78,7 +78,7 @@ const Header = () => {
               </form>
             )}
           </div>
-          <div className="col-lg-4 col-sm-12 mt-1">
+          <div className="col-lg-4 col-sm-12 my-1 mb-3">
         
               <Link to="/userProfile">
                 <img

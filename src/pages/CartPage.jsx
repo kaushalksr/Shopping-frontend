@@ -136,7 +136,7 @@ const Cart = () => {
                       {/* //------------- */}
                     </div>
                     <div
-                      className="col-lg-6 text-center"
+                      className="col-lg-6"
                       style={{ textAlign: "left", justifyContent: "left" }}>
                       <p className="fs-5 m-0 p-0">
                         {item.productCategory} {item.productName}

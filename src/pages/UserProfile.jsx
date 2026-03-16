@@ -22,39 +22,54 @@ const UserProfile = () => {
               alt="userImage"
             />
           </div>
-          <div className="col-lg-4 ">
-            <p className="justify-content-between d-flex">
-              <b>Name : </b> <i>Elina</i>{" "}
+          <div className="col-lg-8">
+            <tr className="my-1">
+              <td>
+                {" "}
+                <b>NAME:</b>{" "}
+              </td>
+              <td>Elina</td>
+            </tr>
+            <tr className="my-1">
+              <td>
+                {" "}
+                <b>NUMBER:</b>{" "}
+              </td>
+              <td>+1123972213</td>
+            </tr>
+            <p>
+              <b>ADDRESS(s) : </b>{" "}
             </p>
-            <p className="justify-content-between d-flex">
-              <b>Number : </b> <i>+1123972213</i>{" "}
-            </p>
-            <p className="justify-content-between d-flex">
-              <b>Address : </b>{" "}
-              <ol>
-                {address.map((add) => (
-                  <li>
-                    {" "}
-                    <i>{add.fullAddress}</i>{" "}
-                  </li>
-                ))}
-              </ol>
-            </p>
+            <div className="row d-flex justify-content-left">
+              {address.map((add, index) => (
+                <div key={add.id} class="col-lg-4 col-sm-10">
+                  <div className="card m-0">
+                    <div class="card-header fw-medium"> Address {index + 1} </div>
+                    <div class="card-body">
+                      <p class="card-text">
+                        {add.name},{add.mobile},{add.locality},{add.fullAddress}
+                        ,{add.city},{add.state},{add.pincode}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div>
           <hr />
-          <div className="row">
+          <div className="row mx-2 d-flex justify-content-center">
             {orderData.length === 0 ? (
               <p className="text-center">No orders</p>
             ) : (
               <p className="fs-3 text-center">Order History</p>
             )}
             {orderData?.map((item, index) => (
-              <div className="border border-primary border-2 p-2 m-1 d-flex flex-coloumn row">
+              <div className="border border-primary border-2 row my-1 py-2 text-center">
                 <div className="col-lg-3 col-sm-12">
                   <p>
-                    <b>({index + 1})</b> {today.toLocaleDateString()}
+                    <b>({index + 1})</b>Ordered on {today.toLocaleDateString()}
                   </p>
                 </div>
                 <div className="col-lg-3  col-sm-12">
