@@ -16,8 +16,8 @@ const ProductCard = ({ product }) => {
         <img
           style={{ position: "relative", borderRadius: 0 }}
           src={product.productImage}
-          height={300}
-          width={100}
+          height={250}
+          width="100%"
           className="card-img-top"
           alt={product.productName}
         />

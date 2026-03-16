@@ -45,7 +45,7 @@ const ProductDetail = () => {
           className="btn btn-outline-secondary btn-sm mb-2"
           to="/api/products">
           {" "}
-        Go back
+          Go back
         </Link>
         <div className="row mt-2 p-2">
           <div className="col-lg-3">
