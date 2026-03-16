@@ -42,8 +42,8 @@ const UserProfile = () => {
             </p>
             <div className="row d-flex justify-content-left">
               {address.map((add, index) => (
-                <div key={add.id} class="col-lg-4 col-sm-10">
-                  <div className="card m-0">
+                <div key={add.id} class="col-lg-4 col-sm-10 mb-2">
+                  <div className="card m-0 h-100">
                     <div class="card-header fw-medium"> Address {index + 1} </div>
                     <div class="card-body">
                       <p class="card-text">

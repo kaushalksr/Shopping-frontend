@@ -11,14 +11,16 @@ const ProductCard = ({ product }) => {
   return (
     <div
       className=" p-0 mx-5 text-center"
-      style={{ position: "relative", borderRadius: 0 }}>
-      <Link to={`/product/${product._id}`}>
+      style={{ position: "relative", borderRadius: 0 ,width:"200px"}}>
+      <Link to={`/product/${product._id}`} >
         <img
-          style={{ position: "relative", borderRadius: 0 }}
+          style={{
+            position: "relative",
+            borderRadius: 0,
+          }}
           src={product.productImage}
           height={250}
           width="100%"
-          className="card-img-top"
           alt={product.productName}
         />
         <span
