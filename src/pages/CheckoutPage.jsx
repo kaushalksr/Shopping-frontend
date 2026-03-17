@@ -194,7 +194,7 @@ const CheckoutPage = () => {
                   <label htmlFor="inputName" className="form-label">
                     Name
                   </label>
-                  <input
+                  <input placeholder="Enter your name"
                     type="text"
                     className="form-control"
                     id="inputName"
@@ -209,7 +209,7 @@ const CheckoutPage = () => {
                   <label htmlFor="inputMobileNumber" className="form-label">
                     Mobile Number
                   </label>
-                  <input
+                  <input placeholder="Enter your mobile number"
                     required
                     value={formData.mobile}
                     onChange={(e) =>
@@ -224,7 +224,7 @@ const CheckoutPage = () => {
                   <label htmlFor="inputPincode" className="form-label">
                     Pincode
                   </label>
-                  <input
+                  <input placeholder="Enter your pincode"
                     required
                     type="number"
                     className="form-control"
@@ -239,7 +239,7 @@ const CheckoutPage = () => {
                   <label htmlFor="inputLocality" className="form-label">
                     Locality
                   </label>
-                  <input
+                  <input placeholder="Enter your locality"
                     required
                     onChange={(e) =>
                       setFormData({ ...formData, locality: e.target.value })
@@ -272,7 +272,7 @@ const CheckoutPage = () => {
                   <label htmlFor="inputCity" className="form-label">
                     City
                   </label>
-                  <input
+                  <input placeholder="Enter your city"
                     required
                     type="text"
                     className="form-control"
